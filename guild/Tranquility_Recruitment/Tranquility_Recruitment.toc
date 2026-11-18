@@ -1,0 +1,10 @@
+## Interface: 16001
+## Title: Tranquility: Recruitment
+## Notes: Manual guildless WHO browser and personalized copyable greetings.
+## Author: Tranquility Guild
+## Version: 1.0.0-beta.4
+## X-License: MIT
+## Dependencies: Tranquility
+## SavedVariables: TranquilityRecruitmentDB
+
+Recruitment.lua

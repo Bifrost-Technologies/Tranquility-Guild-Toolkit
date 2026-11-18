@@ -1,0 +1,10 @@
+## Interface: 16001
+## Title: Tranquility: Regions
+## Notes: Manual WHO region samples and gathering population hints.
+## Author: Tranquility Guild
+## Version: 1.0.0-beta.4
+## X-License: MIT
+## Dependencies: Tranquility
+## SavedVariables: TranquilityRegionsDB
+
+Regions.lua

@@ -1,0 +1,14 @@
+## Interface: 16001
+## Title: Tranquility
+## Notes: Guild toolkit. Open with /tranq. Optional modules can be disabled separately.
+## Author: Tranquility Guild
+## Version: 1.0.0-beta.4
+## OptionalDeps: Uber
+## X-License: MIT
+## SavedVariables: TranquilityDB
+
+Core.lua
+UI.lua
+RecruitData.lua
+Settings.lua
+Who.lua

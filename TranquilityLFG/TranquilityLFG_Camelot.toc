@@ -1,0 +1,13 @@
+## Interface: 16001
+## Title: Tranquility Guild LFG
+## Notes: Guild-only dungeon and PvP group planning. Open /tqlfg.
+## Author: Tranquility Guild
+## Version: 0.2.0-beta.1
+## X-License: MIT
+## SavedVariables: TranquilityLFGDB
+
+LFG.lua
+Profiles.lua
+Builder.lua
+Mirror.lua
+Interface.lua

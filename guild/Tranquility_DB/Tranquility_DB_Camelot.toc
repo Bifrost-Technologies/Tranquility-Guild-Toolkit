@@ -1,0 +1,9 @@
+## Interface: 16001
+## Title: Tranquility: DB
+## Notes: Optional Classic reference routes. Realm-specific drops are unverified.
+## Author: Tranquility Guild
+## Version: 1.0.0-beta.4
+## X-License: MIT
+## Dependencies: Tranquility
+
+Database.lua

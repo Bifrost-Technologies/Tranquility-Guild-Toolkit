@@ -1,0 +1,11 @@
+## Interface: 16001
+## Title: Tranquility: Auctions
+## Notes: Manual asking-price samples, historical baselines and farming candidates.
+## Author: Tranquility Guild
+## Version: 1.0.0-beta.4
+## X-License: MIT
+## Dependencies: Tranquility
+## SavedVariables: TranquilityAuctionsDB
+## OptionalDeps: Tranquility_DB, Tranquility_Loot
+
+Auctions.lua
