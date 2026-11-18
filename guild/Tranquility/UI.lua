@@ -22,7 +22,7 @@ function UI.Edit(parent, text, x, y, width)
 end
 function UI.Panel(name, title, width, height)
     local f = CreateFrame("Frame", name, UIParent, "BackdropTemplate")
-    f:SetSize(width, height); f:SetPoint("CENTER"); f:SetFrameStrata("DIALOG")
+    f:SetSize(width, height);if GetScreenWidth and GetScreenHeight and f.SetScale then f:SetScale(math.min(1,(GetScreenWidth()-40)/width,(GetScreenHeight()-40)/height))end; f:SetPoint("CENTER"); f:SetFrameStrata("DIALOG")
     f:SetClampedToScreen(true); f:EnableMouse(true); f:SetMovable(true)
     f:RegisterForDrag("LeftButton"); f:SetScript("OnDragStart", f.StartMoving)
     f:SetScript("OnDragStop", f.StopMovingOrSizing)

@@ -12,10 +12,7 @@ local function identity(n)
  return n:lower()
 end
 local function mine()return GetUnitName("player",true)end
-function L:Allowed()
- local guild=GetGuildInfo and value(GetGuildInfo("player"))
- return type(guild)=="string"and guild:lower()=="tranquility"
-end
+function L:Allowed()return TranquilityAccess and TranquilityAccess:Allowed()or false end
 function L:Notify(text)self.notice=text;self:Refresh()end
 function L:Send(parts)
  if not self:Allowed()or #self.queue>=50 then return false end
@@ -93,6 +90,7 @@ local function label(f,text,x,y,w,h)local t=f:CreateFontString(nil,"OVERLAY","Ga
 local function button(f,text,x,y,w,fn)local b=CreateFrame("Button",nil,f,"UIPanelButtonTemplate");b:SetPoint("TOPLEFT",x,y);b:SetSize(w,28);b:SetText(text);b:SetScript("OnClick",fn);return b end
 local function edit(f,text,x,y,w)local b=CreateFrame("EditBox",nil,f,"InputBoxTemplate");b:SetPoint("TOPLEFT",x,y);b:SetSize(w,28);b:SetAutoFocus(false);b:SetMaxLetters(90);b:SetText(text);b:SetScript("OnEscapePressed",function(s)s:ClearFocus()end);return b end
 function L:Show()
+ if not TranquilityAccess:Require()then return end
  if not self.frame then
   local f=CreateFrame("Frame","TranquilityLFGPanel",UIParent,"BackdropTemplate");self.frame=f
   f:SetSize(940,700);f:SetPoint("CENTER");f:SetFrameStrata("DIALOG");f:SetClampedToScreen(true);f:EnableMouse(true);f:SetMovable(true);f:RegisterForDrag("LeftButton");f:SetScript("OnDragStart",f.StartMoving);f:SetScript("OnDragStop",f.StopMovingOrSizing)

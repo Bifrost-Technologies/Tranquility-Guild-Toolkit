@@ -2,7 +2,7 @@
 ## Title: Tranquility: Recruitment
 ## Notes: Manual guildless WHO browser and personalized copyable greetings.
 ## Author: Tranquility Guild
-## Version: 1.0.0-beta.4
+## Version: 1.0.0-beta.10
 ## X-License: MIT
 ## Dependencies: Tranquility
 ## SavedVariables: TranquilityRecruitmentDB

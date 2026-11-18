@@ -1,6 +1,6 @@
 # Tranquility Guild Toolkit — CurseForge form entries
 
-Prepared November 17, 2026. Current toolkit: **1.0.0-beta.4**. The author is waiting for the separate Uber submission outcome before publishing this toolkit. No submission or account change is performed by this preparation.
+Prepared November 17, 2026. Current toolkit: **1.0.0-beta.10**. The author is waiting for the separate Uber submission outcome before publishing this toolkit. No submission or account change is performed by this preparation.
 
 ## General tab
 
@@ -30,21 +30,21 @@ Prepared November 17, 2026. Current toolkit: **1.0.0-beta.4**. The author is wai
 
 | Field | Value |
 |---|---|
-| File | Tranquility-Guild-Toolkit-1.0.0-beta.4.zip |
-| File display name | Tranquility Guild Toolkit 1.0.0-beta.4 |
+| File | Tranquility-Guild-Toolkit-1.0.0-beta.10.zip |
+| File display name | Tranquility Guild Toolkit 1.0.0-beta.10 |
 | Release type | Beta |
 | Game flavor/version | The actual supported Forever version offered in the form; manifests target Interface 16001. Do not select unrelated Retail/Classic versions. |
 | Changelog | Paste the current section from CHANGELOG.md |
 | Required related projects/dependencies | None — leave Related Projects empty for required downloads |
 | Optional related projects | Add only real assigned CurseForge projects if you deliberately want to link them; Uber approval is currently pending |
 
-The ZIP currently contains **13 directly installable addon folders**: 11 toolkit folders, TranquilityLFG and Uber. The ten toolkit modules declare a dependency on the bundled Tranquility core. That is an internal WoW addon dependency, not a missing external CurseForge download. Uber and TranquilityLFG are separately enableable companions, not required for the toolkit core. Do not invent CurseForge project IDs or link a different addon with a similar name.
+The ZIP currently contains **15 directly installable addon folders**: 12 toolkit folders, TranquilityLFG and Uber. The ten toolkit modules declare a dependency on the bundled Tranquility core. That is an internal WoW addon dependency, not a missing external CurseForge download. Uber and TranquilityLFG are separately enableable companions, not required for the toolkit core. Do not invent CurseForge project IDs or link a different addon with a similar name.
 
 Upload the **ZIP alone**, not this whole submission folder, its checksum, the logo or a ZIP containing the submission documents. The build uses forward-slash archive entry paths, explicit file lists and source/archive hash checks.
 
 ## Pending Uber review
 
-Wait for the actual Uber outcome as planned. An Uber approval would provide information about that submitted file; it would not automatically approve this toolkit or a different bundled Uber version. The current toolkit bundle includes Uber 0.4.0-beta.1. Confirm the approved Uber version matches the intended bundle before uploading. Do not describe it as approved until confirmed. If moderation requests a change, update the listing/package to match the actual resolution.
+Wait for the actual Uber outcome as planned. An Uber approval would provide information about that submitted file; it would not automatically approve this toolkit or a different bundled Uber version. The current toolkit bundle includes Uber 0.5.0-beta.1. Confirm the approved Uber version matches the intended bundle before uploading. Do not describe it as approved until confirmed. If moderation requests a change, update the listing/package to match the actual resolution.
 
 ## Short reviewer note
 
@@ -55,3 +55,7 @@ Tranquility is a modular guild toolkit with manual recruitment preparation, loca
 - https://support.curseforge.com/support/solutions/articles/9000199552-project-submission-guide-and-tips
 - https://support.curseforge.com/support/solutions/articles/9000197279-moderation-policies
 - https://support.curseforge.com/support/solutions/articles/9000209856
+
+## Membership/vault dependency disclosure
+
+The TranquilityLFG folder now declares its bundled Tranquility core dependency. New member admission requires the separately configured guild Discord bot and an authorized in-game officer; the bot is a private guild service, not an external CurseForge project or addon download. Admitted characters remain usable without a continuous Discord connection while native membership/rank remain valid. No paid access or real-money verification fee. The new vault, job board, contracts, payroll and watchdog limitations are documented in MEMBERSHIP-AND-JOBS.md.

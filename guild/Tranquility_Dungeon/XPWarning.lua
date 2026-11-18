@@ -24,6 +24,7 @@ function X:Assess(enemy)
     if name and highest-level>12 then return name,highest,level end
 end
 function X:Check(enemy)
+    if not TranquilityAccess or not TranquilityAccess:Allowed()then return end
     if not self.enabled or value(IsInGroup)~=true or value(IsInRaid)==true then return end
     if type(IsInInstance)~="function" then return end
     local ok,inside,kind=pcall(IsInInstance)
@@ -52,6 +53,7 @@ frame:SetScript("OnEvent",function(_,event,arg)
 end)
 SLASH_TRANQUILITYXP1="/tranqxp"
 SlashCmdList.TRANQUILITYXP=function(text)
+    if TranquilityAccess and not TranquilityAccess:Require()then return end
     text=(text or ""):lower()
     if text=="off" then X.enabled=false elseif text=="on" then X.enabled=true end
     if DEFAULT_CHAT_FRAME then DEFAULT_CHAT_FRAME:AddMessage("Dungeon XP warnings "..(X.enabled and "ON" or "OFF")..". /tranqxp on | off. Compares observed enemy levels; unknown levels are skipped.") end

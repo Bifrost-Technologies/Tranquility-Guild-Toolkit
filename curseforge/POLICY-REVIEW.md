@@ -1,10 +1,10 @@
-# Tranquility 1.0.0-beta.4 — submission review record
+# Tranquility 1.0.0-beta.10 — submission review record
 
 Prepared November 17, 2026. Scope: current 13-folder distribution and its listing materials. This records preparation and known remaining checks, not platform approval.
 
 ## What the package includes
 
-Eleven Tranquility folders, TranquilityLFG and optional Uber 0.4.0-beta.1. Toolkit modules depend on the bundled core. No required external project/library download, executable helper, credentials, personal SavedVariables or mock screenshots enter the ZIP. All addon source is readable Lua with MIT notices. Native game textures are referenced by path rather than redistributed as artwork.
+Eleven Tranquility folders, TranquilityLFG and optional Uber 0.5.0-beta.1. Toolkit modules depend on the bundled core. No required external project/library download, executable helper, credentials, personal SavedVariables or mock screenshots enter the ZIP. All addon source is readable Lua with MIT notices. Native game textures are referenced by path rather than redistributed as artwork.
 
 ## Runtime statements the listing must preserve
 
@@ -46,3 +46,9 @@ Dungeon teams use one tank, one healer and three DPS; flexible declared roles ca
 Auto formation starts only after the leader queues and explicitly arms it. It sends one invitation at a time, waits for native group changes, and skips unanswered invitations after 25 seconds with a five-minute backoff. Combat skips invite ticks; native failures, lost leadership, leaving queue/guild or missing profiles stop formation. Pause is always available. It does not enter Blizzard activity queues or bypass group/raid permissions.
 
 The new Discord lounge displays public-channel snapshots from a configured trusted in-game officer. The supplied invite identifies Tranquility Server #general. Members without Discord can read imported snapshots and queue replies, but replies are not marked Posted until the optional existing bot confirms an actual send and the officer imports its acknowledgement. WoW cannot directly connect to Discord; the relay uses explicit text handoff, not a live feed. The bot's local credentials/intents are not yet configured. Core/LFG use does not require the external companion. See DISCORD-MIRROR-SETUP.md for the owner setup and limits.
+
+## November 17 security update
+
+Rechecked [CurseForge moderation policies](https://support.curseforge.com/support/solutions/articles/9000197279-moderation-policies) and [Blizzard UI Add-On Development Policy](https://us.forums.blizzard.com/en/wow/t/ui-add-on-development-policy/24534/1). The vault hides UI until free guild membership verification; it does not encrypt or obfuscate source, charge for addon access, or ship another franchise’s images/music. No real-money fees or addon-development donation requests are added. Publish accurate functional descriptions and use real in-game screenshots; label any design/mock previews. Exclude the private bot, credentials, player histories and external executable helpers from the public addon archive.
+
+Local archive checks are not a CurseForge acceptance verdict. Guild-only rank/Discord onboarding requirements must be disclosed, and moderator questions about the project should be answered with the actual code/workflow. Select only the client version actually tested; the current 16001 manifest is not evidence of Retail compatibility. Do not change the client tag just to pass an upload.

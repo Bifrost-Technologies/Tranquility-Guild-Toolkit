@@ -129,7 +129,7 @@ function U:Receive(text,sender,channel)
   for rider in pairs(a.riders)do if not a.delivered[rider]then all=false end end
   -- Party members without their own order cannot be inferred from one customer's jump.
   for _,r in pairs(self.db.inbox)do if (r.camp==a.id or r.join==a.id)and r.details and (r.details.party or 1)>1 then all=false end end
-  if all then self:SetStatus("COMPLETE",0)end
+  if all and not a.sharedSession then self:SetStatus("COMPLETE",0)end
   self:Refresh();return
  elseif p[1]=="DELIVERED4"then
   local r=self.db.outbox[p[2]];local at=integer(p[4],9999999999)
@@ -237,3 +237,32 @@ frame:SetScript("OnEvent",function(_,event,...)
  elseif event=="CONFIRM_SUMMON"then U:ObserveSummonOffer()
  elseif event=="MAIL_INBOX_UPDATE"then U:ArchiveMailboxReceipts()end
 end)
+-- Star-only feedback is attached to an actual, corroborated order. Never seed reviews.
+function U:RateDeliveredOrder(id,stars)
+ local r=self.db.outbox[id];if not r or not r.deliveredAt or r.stars or type(stars)~='number'or stars%1~=0 or stars<1 or stars>5 then return false end
+ if not self:Send({'RATE5',id,tostring(stars)},r.provider)then return false end;r.stars=stars;self:Audit('RATING_SENT',r.provider,id..' '..stars);return true
+end
+function U:RatingSummary(who)
+ self.db.ratingSummaries=self.db.ratingSummaries or {};local r=self.db.ratingSummaries[self.NameKey(who)]
+ return r and r.count>0 and ('%.1f / 5 (%d ratings; provider-reported)'):format(r.total/r.count,r.count)or 'No ratings yet'
+end
+local ratingReceive=U.Receive
+function U:Receive(text,sender,channel)
+ if type(text)=='string'and (text:match('^RATE5|')or text:match('^STARS5|'))then
+  if channel~='WHISPER'or #text>240 or type(sender)~='string'or #sender>100 then return end
+  local id,stars=text:match('^RATE5|([%d%-]+)|([1-5])$')
+  if id then
+   local r=self.db.inbox[id];if not r or not r.deliveredAt or self.NameKey(r.sender)~=self.NameKey(sender)then return end
+   self.db.ratings=self.db.ratings or {};if self.db.ratings[id]then return end
+   local count=0;for _ in pairs(self.db.ratings)do count=count+1 end;if count>=2000 then return end
+   self.db.ratings[id]={stars=tonumber(stars),customer=sender,at=GetServerTime()};local total,n=0,0;for _,v in pairs(self.db.ratings)do total=total+v.stars;n=n+1 end
+   self:Send({'STARS5',tostring(total),tostring(n)},sender);self:Audit('ORDER_RATED',sender,id..' '..stars);return
+  end
+  local total,count=text:match('^STARS5|(%d+)|(%d+)$');total,count=tonumber(total),tonumber(count)
+  if total and count and self:Approved(sender)and count>=1 and count<=2000 and total>=count and total<=5*count then
+   self.db.ratingSummaries=self.db.ratingSummaries or {};local n=0;for _ in pairs(self.db.ratingSummaries)do n=n+1 end;if n>=500 and not self.db.ratingSummaries[self.NameKey(sender)]then return end
+   self.db.ratingSummaries[self.NameKey(sender)]={total=total,count=count};self:Refresh()
+  end;return
+ end
+ return ratingReceive(self,text,sender,channel)
+end

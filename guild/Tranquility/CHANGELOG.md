@@ -1,3 +1,42 @@
+# 1.0.0-beta.10
+
+- Bundled standalone Flight Path Finder 0.1.0-beta.1 with large Alliance/neutral flight-node map pins and native coordinate directory.
+- Added home launcher and /tranq flights shortcut; the same independent addon remains usable without guild membership.
+- Native client data replaces a stale static flight-point list; learned status stays character-specific when reported by the client.
+
+# 1.0.0-beta.9
+
+- Moved reconnaissance into independently disableable Tranquility: PvP (core dependency).
+- Added Radar, Heatmap, Danger alerts and Settings pages, with configurable nearby concentration warnings and optional sound.
+- Alerts consider distance, observed count and age; leaving the area or disabling PvP clears warnings. No complete layer enumeration, hidden unit data or through-wall models.
+
+# 1.0.0-beta.8
+
+- Added opt-in world-defense scouting and guild-shared world-map heat circles with 20-second expiry.
+- Prefer public native unit/world coordinates with player-based axis calibration; use clearly labeled scout proximity only when enabled and precise positioning is unavailable.
+- Added friendly filtering, conservative anonymous density counts, replay/bounds/rank guards and bounded map pin pools. No restricted-value bypass or automated combat.
+
+# 1.0.0-beta.7
+
+- Bundled Uber 0.5.0-beta.1: observed network statistics, disclosed public opt-out/private creator census, active-session joining and native leading-warlock raid conversion.
+- Added bounded background traffic with booking/receipt priority and freshness/capacity checks.
+
+# 1.0.0-beta.6
+
+- Vault now closes with X or Escape and respects dismissal during login/roster updates.
+- Double-click reveal is remembered permanently; the inscription fades into Discord instructions and a copyable invite.
+- Added temporary shared Discord initiation code for existing guild members, with an online authorized officer requesting native Dedicated Member promotion. Outsiders and suspended members stay denied.
+- Kept character-bound challenges and native rank confirmation; no simulated guild promotions.
+
+# 1.0.0-beta.5
+
+- Added native Dedicated Member-or-higher access gate and locked recruit verification path.
+- Added officer-reviewed profession jobs, observed bank evidence, duplicate protection and withdrawal flags.
+- Added player Guide offers, multi-participant mercenary contracts, five job roles and bounded daily award records.
+- Added expiring Discord character verification handoff and optional bank/LFG status snapshots; bot credentials remain private and separately configured.
+- Bundled TranquilityLFG 0.3.0-beta.1 and Uber 0.4.0-beta.2 with native-confirmed gold guild names and completed-order star-only feedback.
+- No automatic gold transfers, invented delivery proof, fabricated reviews or automatic guild bans.
+
 # 1.0.0-beta.4
 
 - Expanded TranquilityLFG to dedicated Dungeon, Battleground and Arena pages, casual/ranked categories, 10/15/40-person battleground planning and 2v2/3v3/5v5 arena partner listings.

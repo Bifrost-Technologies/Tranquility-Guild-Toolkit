@@ -11,13 +11,15 @@ function widget:CreateFontString()return setmetatable({text=""},{__index=widget}
 CreateFrame=function()return setmetatable({text="",scripts={}},{__index=widget})end
 UIParent={};UISpecialFrames={};SlashCmdList={}
 GetServerTime=function()return clock end;GetNormalizedRealmName=function()return "Realm"end
-GetGuildInfo=function()return guild end;UnitClass=function()return class,class end;UnitLevel=function()return level end
+UnitGUID=function()return "fixture-guid"end
+TranquilityDB={security={vaultUnlocked={character=player:lower(),guid="fixture-guid",confirmed=true}}}
+GetGuildInfo=function()return guild,"Dedicated Member",3 end;UnitClass=function()return class,class end;UnitLevel=function()return level end
 GetUnitName=function(unit)if unit=="player"then return player end;local n=unit:match("^party(%d+)$");return n and group[tonumber(n)]end
 IsInGroup=function()return #group>0 end;GetNumGroupMembers=function()return #group>0 and #group+1 or 0 end
 UnitIsGroupLeader=function()return leader end;InCombatLockdown=function()return combat end
 GetPersonalRatedInfo=function(i)return 1800+i end;UnitPVPRank=function()return 7 end
 C_ChatInfo={RegisterAddonMessagePrefix=function()end};local invited={};InviteUnit=function(name)invited[#invited+1]=name end
-for _,file in ipairs({"LFG","Profiles","Builder","Mirror","Interface"})do assert(loadfile("TranquilityLFG/"..file..".lua"))()end
+for _,file in ipairs({"Access","LFG","Profiles","Builder","Mirror","Interface"})do assert(loadfile("TranquilityLFG/"..file..".lua"))()end
 local l=TranquilityLFG;l:Settings();l.db.leader=true;l.role="HEALER";l.db.roles="HEALER"
 check(l:OwnProfile().class=="PALADIN"and l:OwnProfile().level==20,"Native class and level profile")
 l:PublishProfile();check(#l:Directory()==1 and not l:Directory()[1].ready,"Loaded members discoverable without queueing")

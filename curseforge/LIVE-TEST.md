@@ -1,4 +1,4 @@
-# Client acceptance record — 1.0.0-beta.4
+# Client acceptance record — 1.0.0-beta.10
 
 Status: **NOT YET RUN IN GAME.** Offline tests cannot establish absence of
 taint or client-specific protected-action restrictions. Keep this file in the
@@ -59,7 +59,7 @@ Observed results and unresolved issues: __________________
 
 - Test TranquilityLFG with two consenting Tranquility guild members: queue several activities, role/filter changes, native invite permissions, expiry, leave and reload. Verify no visible guild-chat advertisement and deny non-member queue access.
 - Verify Dungeon XP warnings begin enabled, remain rate limited and stop after /tranqxp off for the session; clicked dungeon summaries remain separate.
-- Disable Uber and verify toolkit/LFG/basic summons remain usable. Enable the bundled Uber 0.4.0-beta.1 and verify launch buttons, native mailbox/delivery and its own documented live checks.
+- Disable Uber and verify toolkit/LFG/basic summons remain usable. Enable the bundled Uber 0.5.0-beta.1 and verify launch buttons, native mailbox/delivery and its own documented live checks.
 - Confirm optional companions' exact reviewed versions and pending/approved state before publication. A different file's approval is not recorded as this bundle passing.
 
 ## New in the guild group finder
@@ -75,3 +75,17 @@ Dungeon teams use one tank, one healer and three DPS; flexible declared roles ca
 Auto formation starts only after the leader queues and explicitly arms it. It sends one invitation at a time, waits for native group changes, and skips unanswered invitations after 25 seconds with a five-minute backoff. Combat skips invite ticks; native failures, lost leadership, leaving queue/guild or missing profiles stop formation. Pause is always available. It does not enter Blizzard activity queues or bypass group/raid permissions.
 
 The new Discord lounge displays public-channel snapshots from a configured trusted in-game officer. The supplied invite identifies Tranquility Server #general. Members without Discord can read imported snapshots and queue replies, but replies are not marked Posted until the optional existing bot confirms an actual send and the officer imports its acknowledgement. WoW cannot directly connect to Discord; the relay uses explicit text handoff, not a live feed. The bot's local credentials/intents are not yet configured. Core/LFG use does not require the external companion. See DISCORD-MIRROR-SETUP.md for the owner setup and limits.
+
+## Vault and work board acceptance
+
+- Start on an outsider, entry Member, Dedicated Member and officer; verify only the vault is visible before approval. Double-click the sealed door, watch the inscription and controls fade in, enter an incorrect then correct four-digit code. Correct PIN without native rank must remain locked.
+- Bootstrap the native Guild Master, configure exact administrator ranks, import a real bot request, issue an in-game PIN, verify the exact character, confirm native promotion and observe unlock. Verify wrong sender, expired code, duplicate code and unsolicited approval rejection.
+- Demote/leave/suspend a verified character: launcher, module panels and LFG operations must disappear, and remembered unlock must be revoked. Re-promotion alone must not restore entry.
+- Configure repair privileges in native guild controls. Verify a Member cannot use repairs and Dedicated Member receives the configured allowance. The addon never alters bank privileges.
+- Claim a profession order, baseline a bank tab, deposit exact item/quantity, report, review and manually pay once. Re-read the same log; evidence must not duplicate. Withdraw/move a matching item after payout: expect a review flag, never automatic ban. Test incomplete/unavailable logs without inventing delivery proof.
+- Assign Guide/Mercenaries job roles; post a free guide request and a paid mercenary contract, accept multiple mercenaries, review and record each manual payment separately. Confirm no gold is sent by the addon.
+- Test role award bounds, duplicate-day protection, summon totals/guild recipients and unavailable remote evidence. Test a fresh uncommon/rare AH quote for the Loot Goblin order before posting.
+- Test one completed-order 1–5-star Uber review and gold names only for native-confirmed Tranquility membership. Verify no fabricated initial reviews.
+- Configure bot locally, register commands, confirm DMs and Discord role hierarchy, then import the actual native-rank confirmation. Check bank/LFG presence snapshot expiry. Credentials must never appear in exported source, chat output or archives.
+
+These live client/account checks remain required; mocked Lua/Node tests and valid ZIPs cannot substitute for native guild permissions, actual bank events, spell delivery, Discord role hierarchy or moderator approval.

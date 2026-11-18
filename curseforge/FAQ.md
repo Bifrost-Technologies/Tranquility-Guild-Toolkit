@@ -14,7 +14,7 @@ No external project download, library, service account or desktop program is req
 
 ## Is Uber already approved?
 
-The author is awaiting its separate submission result. This preparation does not claim approval. The current toolkit bundle includes Uber 0.4.0-beta.1. Check the actual reviewed file/version before publishing a combined bundle. Its pricing, mail and evidence features are documented separately.
+The author is awaiting its separate submission result. This preparation does not claim approval. The current toolkit bundle includes Uber 0.5.0-beta.1. Check the actual reviewed file/version before publishing a combined bundle. Its pricing, mail and evidence features are documented separately.
 
 ## Does LFG send guild-chat advertisements or enter matchmaking?
 
@@ -67,4 +67,8 @@ Dungeon teams use one tank, one healer and three DPS; flexible declared roles ca
 
 Auto formation starts only after the leader queues and explicitly arms it. It sends one invitation at a time, waits for native group changes, and skips unanswered invitations after 25 seconds with a five-minute backoff. Combat skips invite ticks; native failures, lost leadership, leaving queue/guild or missing profiles stop formation. Pause is always available. It does not enter Blizzard activity queues or bypass group/raid permissions.
 
-The new Discord lounge displays public-channel snapshots from a configured trusted in-game officer. The supplied invite identifies Tranquility Server #general. Members without Discord can read imported snapshots and queue replies, but replies are not marked Posted until the optional existing bot confirms an actual send and the officer imports its acknowledgement. WoW cannot directly connect to Discord; the relay uses explicit text handoff, not a live feed. The bot's local credentials/intents are not yet configured. Core/LFG use does not require the external companion. See DISCORD-MIRROR-SETUP.md for the owner setup and limits.
+The new Discord lounge displays public-channel snapshots from a configured trusted in-game officer. The supplied invite identifies Tranquility Server #general. Members without Discord can read imported snapshots and queue replies, but replies are not marked Posted until the optional existing bot confirms an actual send and the officer imports its acknowledgement. WoW cannot directly connect to Discord; the relay uses explicit text handoff, not a live feed. The bot's local credentials/intents are not yet configured. The mirror is optional for admitted members; initial membership/vault onboarding requires the separately configured bot and authorized officer handoff. See DISCORD-MIRROR-SETUP.md for the owner setup and limits.
+
+## Dedicated membership and guild work
+
+Tranquility Toolkit now requires native Dedicated Member-or-higher membership. Member recruits verify through the separately configured Discord bot and an authorized officer confirms their native promotion. The tradesman board supports profession bank orders, player help offers, multi-participant mercenary contracts, reviewed payroll and withdrawal flags. Open `/tranq jobs`. Payments, bank privileges and punitive guild actions remain native/manual. See [Membership and jobs](MEMBERSHIP-AND-JOBS.md) in the submission documentation for policy, workflow and evidence limits.

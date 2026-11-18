@@ -61,4 +61,3 @@ function U:SetStatus(status,minutes)
     if not self.online or not o or not self.statusLabels[status]or not minutes or minutes~=minutes or minutes<0 or minutes>1440 then return false end
     o.status=status;o.eta=clock()+math.floor(minutes*60);self:Publish();self:Refresh();return true
 end
-

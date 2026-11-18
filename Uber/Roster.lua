@@ -5,6 +5,7 @@ end
 function U:DriverAction(who,action)
     if not self:Approved(who)then return false end
     if action=="request"then self:SelectDriver(who);return true end
+    if action=="rate"then return self:ShowStars(who)end
     if action=="friend"then
         local add=C_FriendList and C_FriendList.AddFriend or AddFriend
         if add then local ok=pcall(add,who);self:Notice(ok and "Friend request sent to "..who.."."or "Unable to add friend.");return ok end
@@ -20,9 +21,9 @@ end
 function U:DriverMenu(who,anchor)
     if not self.menu then
         local f=CreateFrame("Frame",nil,self.frame,"BackdropTemplate");self.menu=f
-        f:SetSize(240,152);f:SetFrameStrata("TOOLTIP");f:SetClampedToScreen(true);f:EnableMouse(true)
+        f:SetSize(240,186);f:SetFrameStrata("TOOLTIP");f:SetClampedToScreen(true);f:EnableMouse(true)
         f:SetBackdrop({bgFile="Interface\\Buttons\\WHITE8X8",edgeFile="Interface\\Tooltips\\UI-Tooltip-Border",edgeSize=12});f:SetBackdropColor(.04,.06,.09,1)
-        for i,item in ipairs({{"Request summons","request"},{"Add friend","friend"},{"Ask to join guild","guild"},{"Close",false}})do
+        for i,item in ipairs({{"Request summons","request"},{"Add friend","friend"},{"Ask to join guild","guild"},{"Rate completed service","rate"},{"Close",false}})do
             local action=item[2];local b=CreateFrame("Button",nil,f,"UIPanelButtonTemplate");b:SetPoint("TOPLEFT",10,-10-(i-1)*34);b:SetSize(220,28);b:SetText(item[1])
             b:SetScript("OnClick",function()f:Hide();if action then self:DriverAction(self.menuName,action)end end)
         end
@@ -77,11 +78,11 @@ function U:Refresh()
             row.icon:SetTexture(mage and "Interface\\Icons\\ClassIcon_Mage"or "Interface\\Icons\\ClassIcon_Warlock");row.icon:SetTexCoord(0,1,0,1)
             if self.ProviderLive then
                 local live=self:ProviderLive(who);local policy=self:ProviderPolicy(who)
-                row.title:SetText((live and "|cff59dbc0[LIVE]|r "or "|cff999999[OFFLINE]|r ")..who..(self.NameKey(who)==self.NameKey(self.FOUNDER)and "  · Creator"or ""))
+                row.title:SetText((live and "|cff59dbc0[LIVE]|r "or "|cff999999[OFFLINE]|r ")..(self:NativeTranquilityMember(who)and "|cffffd166"..who.."|r · Tranquility"or who)..(self.NameKey(who)==self.NameKey(self.FOUNDER)and "  · Creator"or ""))
                 row:SetAlpha(live and 1 or .6)
                 local base=policy.standard and policy.standard+self:PortalCost(who)or peer and peer.standard
                 local price=base and ("From "..self:Money(base).." · Priority +"..self:Money(policy.priority or peer and peer.priority or 0))or "Quote required"
-                row.info:SetText((mage and "Mage portals"or "Warlock summons").." · "..price.."\n"..policy.hours)
+                row.info:SetText((mage and "Mage portals"or "Warlock summons").." · "..price.."\n"..policy.hours.." · "..self:RatingSummary(who))
             end
             -- Unit tokens are only available for self / party / raid; never invent remote portrait data.
             if SetPortraitTexture and GetUnitName then
@@ -92,4 +93,26 @@ function U:Refresh()
             end
         end
     end
+end
+function U:NativeTranquilityMember(who)
+ local wanted=self.NameKey(who)
+ for _,unit in ipairs({'player','party1','party2','party3','party4'})do
+  local name=GetUnitName and GetUnitName(unit,true)
+  if type(name)=='string'and(not issecretvalue or not issecretvalue(name))and self.NameKey(name)==wanted then
+   local guild=GetGuildInfo and GetGuildInfo(unit);return type(guild)=='string'and(not issecretvalue or not issecretvalue(guild))and guild:lower()=='tranquility'
+  end
+ end
+ local own=GetGuildInfo and GetGuildInfo('player');if type(own)~='string'or(issecretvalue and issecretvalue(own))or own:lower()~='tranquility'or not GetNumGuildMembers or not GetGuildRosterInfo then return false end
+ for i=1,math.min(2000,GetNumGuildMembers()or 0)do local name=GetGuildRosterInfo(i);if type(name)=='string'and(not issecretvalue or not issecretvalue(name))and self.NameKey(name)==wanted then return true end end
+ return false
+end
+function U:ShowStars(who)
+ local id,latest=nil,0;for key,r in pairs(self.db.outbox)do if self.NameKey(r.provider)==self.NameKey(who)and r.deliveredAt and not r.stars and r.deliveredAt>latest then id,latest=key,r.deliveredAt end end
+ if not id then self:Notice('Complete a corroborated Uber order before rating. One star-only review per order.');return false end
+ if not self.ratingFrame then
+  local f=CreateFrame('Frame',nil,UIParent,'BackdropTemplate');self.ratingFrame=f;f:SetSize(480,160);f:SetPoint('CENTER');f:SetFrameStrata('DIALOG');f:EnableMouse(true);f:SetBackdrop({bgFile='Interface\\Buttons\\WHITE8X8',edgeFile='Interface\\Tooltips\\UI-Tooltip-Border',edgeSize=16});f:SetBackdropColor(.04,.06,.09,1)
+  local title=f:CreateFontString(nil,'OVERLAY','GameFontNormalLarge');title:SetPoint('TOP',0,-20);title:SetText('Rate your completed service · 5 is best')
+  for i=1,5 do local stars=i;local b=CreateFrame('Button',nil,f,'UIPanelButtonTemplate');b:SetSize(76,30);b:SetPoint('TOPLEFT',24+(i-1)*87,-66);b:SetText(i..' / 5');b:SetScript('OnClick',function()if self:RateDeliveredOrder(self.ratingOrder,stars)then f:Hide();self:Notice('Star rating sent. Thank you!')end end)end
+  local close=CreateFrame('Button',nil,f,'UIPanelCloseButton');close:SetPoint('TOPRIGHT')
+ end;self.ratingOrder=id;self.ratingFrame:Show();return true
 end

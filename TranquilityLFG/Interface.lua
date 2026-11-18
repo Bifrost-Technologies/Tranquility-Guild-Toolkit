@@ -28,6 +28,7 @@ function L:SetPage(mode)
  self:Refresh()
 end
 function L:ShowProfile()
+ if not TranquilityAccess:Require()then return end
  if not self.profileFrame then
   local f=panel("TranquilityLFGProfile","YOUR AVAILABILITY & LOOT PROFILE",800,590);self.profileFrame=f
   self.profileInfo=label(f,"",24,-64,740,68)
@@ -50,6 +51,7 @@ function L:ShowProfile()
  local ids={};for id in pairs(self.db.wants or {})do ids[#ids+1]=id end;table.sort(ids);self.wishlist:SetText(table.concat(ids,","));self:Refresh()
 end
 function L:ShowBuilder()
+ if not TranquilityAccess:Require()then return end
  if not self.builderFrame then
   local f=panel("TranquilityLFGBuilder","LEADER GROUP BUILDER · ROLE & LOOT BALANCE",920,700);self.builderFrame=f
   self.diversityCheck=check(f,"Optimize loot diversity",24,-64,320,function(on)self.options.diversity=on;self.plan=nil;self.options.auto=false end)
@@ -84,6 +86,7 @@ function L:ShowBuilder()
  self.showingLoot=false;self.builderFrame:Show();self:Refresh()
 end
 function L:ShowDiscord()
+ if not TranquilityAccess:Require()then return end
  local db=self:MirrorDB()
  if not self.discordFrame then
   local f=panel("TranquilityLFGDiscord","TRANQUILITY · DISCORD LOUNGE",960,740);self.discordFrame=f
@@ -108,6 +111,7 @@ function L:ShowDiscord()
  self.discordFrame:Show();self:Refresh()
 end
 function L:Show()
+ if not TranquilityAccess:Require()then return end
  self:Settings()
  if not self.frame then
   local f=panel("TranquilityLFGPanel","TRANQUILITY · GUILD GROUP FINDER",1000,750);self.frame=f

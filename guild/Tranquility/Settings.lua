@@ -22,6 +22,7 @@ function T:SaveRecruitSettings(normal,slow,window,batch)
     return true
 end
 function T:ShowRecruitSettings()
+    if not TranquilityAccess or not TranquilityAccess:Require()then return end
     local UI=self.featureUI
     if not self.settingsFrame then
         local f=UI.Panel("TranquilityGlobalSettings","TRANQUILITY / GLOBAL SETTINGS",760,440)

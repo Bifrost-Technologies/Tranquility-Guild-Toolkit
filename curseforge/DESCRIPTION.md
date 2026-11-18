@@ -14,7 +14,7 @@ The home panel also provides entry points for the included guild LFG board and U
 
 ## Private dungeon and PvP group finding
 
-**TranquilityLFG** is a shared activity board for Tranquility guild members using the addon. It helps people discover compatible plans without repeatedly advertising their group in visible guild chat.
+**TranquilityLFG** is a shared activity board for verified Dedicated Member-or-higher Tranquility members using the addon. It helps people discover compatible plans without repeatedly advertising their group in visible guild chat.
 
 - Choose a dungeon, battleground/world-PvP activity, arena plan or rated-battleground plan.
 - Select presets or enter a custom activity, with up to five selected activities per listing.
@@ -76,7 +76,7 @@ For customer bookings, Mage portals, provider scheduling and delivery records, u
 
 ## Optional Uber summons and portals
 
-The current distribution also includes **Uber 0.4.0-beta.1**, which can be enabled or disabled separately. The Tranquility home and Summons panels open it when available. Uber's own CurseForge approval is pending; its presence in this bundle is not a claim that either project has been approved.
+The current distribution also includes **Uber 0.5.0-beta.1**, which can be enabled or disabled separately. The Tranquility home and Summons panels open it when available. Uber's own CurseForge approval is pending; its presence in this bundle is not a claim that either project has been approved.
 
 Uber provides reviewed Warlock/Mage provider cards, prices, regular hours, customized requests, advance reservations, setup status and reported map location. It also includes creator review/moderation, native-mail drafts and receipt/cast/customer-arrival timelines. Offline reservations remain local until delivered and accepted. Delivery observations are client evidence, not server-certified proof.
 
@@ -130,7 +130,7 @@ Direct commands: **`/tqlfg`** opens guild LFG; **`/uber`** opens Uber. The toolk
 
 ## Compatibility and support
 
-The current toolkit is **1.0.0-beta.4**, targeting **World of Warcraft: Forever / Interface 16001**. Other flavors are not claimed as supported. Companion addons have their own version numbers. Automated module and package checks complement, but do not replace, live client testing of multiplayer delivery, protected actions and UI scale.
+The current toolkit is **1.0.0-beta.10**, targeting **World of Warcraft: Forever / Interface 16001**. Other flavors are not claimed as supported. Companion addons have their own version numbers. Automated module and package checks complement, but do not replace, live client testing of multiplayer delivery, protected actions and UI scale.
 
 For a useful bug report, include the toolkit/addon version, exact game build, enabled modules, steps to reproduce and the full Lua error. Remove private character information before posting. Use the project's comments or the publisher's listed support channel.
 
@@ -149,4 +149,8 @@ Dungeon teams use one tank, one healer and three DPS; flexible declared roles ca
 
 Auto formation starts only after the leader queues and explicitly arms it. It sends one invitation at a time, waits for native group changes, and skips unanswered invitations after 25 seconds with a five-minute backoff. Combat skips invite ticks; native failures, lost leadership, leaving queue/guild or missing profiles stop formation. Pause is always available. It does not enter Blizzard activity queues or bypass group/raid permissions.
 
-The new Discord lounge displays public-channel snapshots from a configured trusted in-game officer. The supplied invite identifies Tranquility Server #general. Members without Discord can read imported snapshots and queue replies, but replies are not marked Posted until the optional existing bot confirms an actual send and the officer imports its acknowledgement. WoW cannot directly connect to Discord; the relay uses explicit text handoff, not a live feed. The bot's local credentials/intents are not yet configured. Core/LFG use does not require the external companion. See DISCORD-MIRROR-SETUP.md for the owner setup and limits.
+The new Discord lounge displays public-channel snapshots from a configured trusted in-game officer. The supplied invite identifies Tranquility Server #general. Members without Discord can read imported snapshots and queue replies, but replies are not marked Posted until the optional existing bot confirms an actual send and the officer imports its acknowledgement. WoW cannot directly connect to Discord; the relay uses explicit text handoff, not a live feed. The bot's local credentials/intents are not yet configured. The mirror is optional for admitted members; initial membership/vault onboarding requires the separately configured bot and authorized officer handoff. See DISCORD-MIRROR-SETUP.md for the owner setup and limits.
+
+## Dedicated membership and guild work
+
+Tranquility Toolkit now requires native Dedicated Member-or-higher membership. Member recruits verify through the separately configured Discord bot and an authorized officer confirms their native promotion. The tradesman board supports profession bank orders, player help offers, multi-participant mercenary contracts, reviewed payroll and withdrawal flags. Open `/tranq jobs`. Payments, bank privileges and punitive guild actions remain native/manual. See [Membership and jobs](MEMBERSHIP-AND-JOBS.md) in the submission documentation for policy, workflow and evidence limits.

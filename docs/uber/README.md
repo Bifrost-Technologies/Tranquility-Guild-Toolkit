@@ -5,6 +5,3 @@ Start with submission.md for the CurseForge form worksheet. DISCORD.md contains 
 The release is a beta candidate. No CurseForge account submission has been made. Actual screenshots and multi-client validation remain required before claiming those checks are complete.
 
 Runtime/player instructions: Uber/README.md in the source tree and inside the release ZIP. The share/Uber-submission folder gathers the ZIP, hash and these materials for review.
-
-
-

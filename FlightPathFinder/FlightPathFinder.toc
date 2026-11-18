@@ -1,0 +1,12 @@
+## Interface: 16001
+## Title: Flight Path Finder
+## Notes: Large Alliance-accessible flight-master map markers and native coordinate directory. /fpf.
+## Author: Tranquility Guild
+## Version: 0.1.0-beta.1
+## X-License: MIT
+## SavedVariables: FlightPathFinderDB
+## SavedVariablesPerCharacter: FlightPathFinderCharDB
+
+FlightPathFinder.lua
+Map.lua
+Interface.lua

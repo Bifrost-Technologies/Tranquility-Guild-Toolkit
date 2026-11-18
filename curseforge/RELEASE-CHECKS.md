@@ -2,7 +2,7 @@
 
 ## Package identity
 
-- Toolkit 1.0.0-beta.4; Forever Interface 16001. Companion versions: TranquilityLFG 0.2.0-beta.1 and Uber 0.4.0-beta.1.
+- Toolkit 1.0.0-beta.10; Forever Interface 16001. Companion versions: TranquilityLFG 0.3.0-beta.1 and Uber 0.5.0-beta.1.
 - Thirteen direct addon roots: eleven toolkit folders plus TranquilityLFG and Uber. No extra enclosing toolkit folder.
 - Native generic/Camelot TOCs match their addon folders. Core/module dependencies refer to bundled folders.
 - Only declared source, documentation and MIT notices are uploaded. No local account data, credentials, executable helpers or design-preview assets.

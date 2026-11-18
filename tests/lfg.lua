@@ -10,8 +10,11 @@ UIParent={};UISpecialFrames={};SlashCmdList={}
 GetServerTime=function()return time end
 GetUnitName=function()return "Me-Realm"end
 GetNormalizedRealmName=function()return "Realm"end
-GetGuildInfo=function()return guild end
+UnitGUID=function()return "fixture-guid"end
+TranquilityDB={security={vaultUnlocked={character=GetUnitName("player",true):lower(),guid="fixture-guid",confirmed=true}}}
+GetGuildInfo=function()return guild,"Dedicated Member",3 end
 C_ChatInfo={RegisterAddonMessagePrefix=function()end}
+assert(loadfile("TranquilityLFG/Access.lua"))()
 assert(loadfile("TranquilityLFG/LFG.lua"))()
 local l=TranquilityLFG
 check(l:Join("DUNGEON",{"Scarlet Monastery","Stratholme"},"HEALER","Have quests",5),"Member queues for multiple dungeons")

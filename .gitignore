@@ -1,3 +1,18 @@
+# Source-only repository: allow Lua, manifests, Markdown, build/verification source and metadata.
+*
+!*/
+!*.lua
+!*.toc
+!*.md
+!*.ps1
+!*.cjs
+!*.bat
+!*.cmd
+!LICENSE
+!.gitignore
+!.gitattributes
+!.editorconfig
+
 # Generated releases belong in GitHub/CurseForge release uploads, not source commits.
 /dist/
 /share/
@@ -39,11 +54,9 @@ build/
 Thumbs.db
 desktop.ini
 
-# Credentials and local configuration; example configuration may be committed.
+# Credentials/local configuration are not part of these source-only addon repositories.
 .env
 .env.*
-!.env.example
-!.env.*.example
 *.pem
 *.key
 *.p12

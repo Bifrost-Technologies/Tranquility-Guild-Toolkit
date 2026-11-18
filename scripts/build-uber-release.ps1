@@ -81,6 +81,7 @@ try {
     New-Item -ItemType Directory -Path $current -Force | Out-Null
     Copy-Item -LiteralPath $zip,($zip+'.sha256'),'Uber/README.md','Uber/LICENSE','Uber/CHANGELOG.md' -Destination $current -Force
     foreach($doc in @('DESCRIPTION.md','DISCORD.md','FORM-ENTRIES.md','submission.md','ADMIN-AND-DELIVERY.md','ARCHIVE-REPAIR.md','TESTING.md','uber-logo-400.png','PREFLIGHT.txt')){
+        if($doc -eq 'uber-logo-400.png' -and -not(Test-Path -LiteralPath (Join-Path $handoff $doc))){continue}
         Copy-Item -LiteralPath (Join-Path $handoff $doc) -Destination $current -Force
     }
     Set-Content -LiteralPath (Join-Path $current 'UPLOAD-THIS-FILE.txt') -Value @("Upload only Uber-$version.zip to the existing project.",'Do not zip/upload this entire folder. The other files are listing, license, logo and test materials.','No file has been uploaded automatically. Record live tests and supply real screenshots before publication.') -Encoding utf8

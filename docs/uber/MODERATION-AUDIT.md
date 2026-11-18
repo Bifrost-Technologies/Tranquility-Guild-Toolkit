@@ -44,4 +44,3 @@ These notes record an engineering review and preparation, not legal advice, offi
 
 ## Superseding 0.3 payment scope
 Earlier coordination-only conclusions do not certify the new commission features. Billing.lua observes native mail and prepares text drafts; no automatic SendMail transfer is invoked. Buyer reports are explicitly unverified. This release adds financial claims and needs fresh live-client and policy review. See the current DESCRIPTION.md and README for exact pricing, 22s portal minimum, direct-recipient mail and offline-house limitations.
-

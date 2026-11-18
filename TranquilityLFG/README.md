@@ -64,3 +64,7 @@ Up to 250 profiles/listings, 50 queued outgoing packets and one guild packet per
 Discord retains up to 120 snapshot messages and 100 reply records locally. Names and timestamps identify reported senders; remote addons and relay officers can modify reports, so this is not independent identity/rank certification. Saved preferences/snapshots use normal logout/reload persistence, with normal crash-loss limits. Native party permissions, combat and available APIs apply.
 
 Beta: simulated tests exercise protocol, formation and GUI initialization. Live native invitation, rank API, multiplayer, actual loot-source data and Discord handoff tests remain required. MIT; see LICENSE.
+
+## Membership vault
+
+Requires the Tranquility core addon. Native Tranquility Dedicated Member-or-higher rank and a character-bound vault unlock are mandatory. Entry Member and outsiders cannot use the directory, queue, invite builder or lounge. Use the guild bot and an officer-issued in-game four-digit vault code. Rank revocation immediately seals the toolkit again.

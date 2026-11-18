@@ -1,0 +1,11 @@
+## Interface: 16001
+## Title: Tranquility: PvP
+## Notes: Guild scouting, short-lived PvP heatmaps and approaching-danger alerts. /tranq pvp.
+## Author: Tranquility Guild
+## Version: 1.0.0-beta.10
+## X-License: MIT
+## Dependencies: Tranquility
+
+PvP.lua
+Alerts.lua
+Interface.lua

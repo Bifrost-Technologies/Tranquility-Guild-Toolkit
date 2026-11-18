@@ -2,7 +2,7 @@
 ## Title: Tranquility: DB
 ## Notes: Optional Classic reference routes. Realm-specific drops are unverified.
 ## Author: Tranquility Guild
-## Version: 1.0.0-beta.4
+## Version: 1.0.0-beta.10
 ## X-License: MIT
 ## Dependencies: Tranquility
 

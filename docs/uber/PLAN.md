@@ -19,5 +19,3 @@ Four addon packets/second maximum, 100 queued packets, 100 requests per inbox/ou
 6. Check distinct title and original icon. Fill real account/source/support details. Submit through author's account, then address moderation feedback.
 
 Live-client and screenshot gates are still open. Package preparation is not publication or a moderation guarantee.
-
-

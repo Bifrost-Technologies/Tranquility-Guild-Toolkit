@@ -2,7 +2,7 @@
 
 Our guild tools in one place: private dungeon/PvP group planning, loot notes, auction research, manual recruiting and party helpers.
 
-**Current candidate: 1.0.0-beta.4 for WoW: Forever, Interface 16001.** We are preparing the listing while waiting for Uber's separate submission result. This is not a claim that either project has been approved.
+**Current candidate: 1.0.0-beta.10 for WoW: Forever, Interface 16001.** We are preparing the listing while waiting for Uber's separate submission result. This is not a claim that either project has been approved.
 
 ## Install and open
 

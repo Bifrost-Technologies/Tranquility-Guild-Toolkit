@@ -1,6 +1,6 @@
 # Tranquility — author handoff
 
-Current candidate: **Tranquility Guild Toolkit 1.0.0-beta.4** for Forever / Interface 16001. Publication is on hold while the author awaits the separate Uber submission result. This folder prepares materials; it does not submit anything.
+Current candidate: **Tranquility Guild Toolkit 1.0.0-beta.10** for Forever / Interface 16001. Publication is on hold while the author awaits the separate Uber submission result. This folder prepares materials; it does not submit anything.
 
 | Need | File |
 |---|---|
@@ -14,9 +14,9 @@ Current candidate: **Tranquility Guild Toolkit 1.0.0-beta.4** for Forever / Inte
 | Real gameplay capture list and captions | SCREENSHOTS.md |
 | Original 400×400 project logo | avatar.png |
 | Local/client and release checks | LIVE-TEST.md, RELEASE-CHECKS.md, POLICY-REVIEW.md |
-| Upload | Tranquility-Guild-Toolkit-1.0.0-beta.4.zip only |
+| Upload | Tranquility-Guild-Toolkit-1.0.0-beta.10.zip only |
 
-The ZIP contains 13 installable addon folders: the core, ten feature modules, TranquilityLFG and optional Uber 0.4.0-beta.1. No external required dependency download is needed. Keep the core enabled for toolkit modules. The optional Uber approval/version must be checked before publishing this combined distribution; approval of a separate file does not automatically cover the bundle.
+The ZIP contains 13 installable addon folders: the core, ten feature modules, TranquilityLFG and optional Uber 0.5.0-beta.1. No external required dependency download is needed. Keep the core enabled for toolkit modules. The optional Uber approval/version must be checked before publishing this combined distribution; approval of a separate file does not automatically cover the bundle.
 
 The docs disclose automatic Dungeon XP warnings and how to disable them, quiet guild-addon LFG messaging, optional Uber service/payment reporting, local storage and explicit in-game sharing. They do not promise that every feature is silent or that all information remains on one client.
 

@@ -68,3 +68,13 @@ The optional external bot is deliberately excluded from this public addon reposi
 For issues, include the toolkit/companion version, exact client build, enabled modules, steps and full Lua error with private details removed. See [CONTRIBUTING.md](CONTRIBUTING.md). Persistent records use local SavedVariables and documented in-game sharing, not a required cloud account.
 
 MIT License. Independent community project, not endorsed by Blizzard or CurseForge. Normal game/API rules apply; native unavailable ranks, loot sources and observations stay unknown.
+
+
+## Source-only tracking
+
+Only Lua, required .toc manifests, Markdown, licenses, source build/verification scripts and Git/editor metadata are included. Images, archives, generated releases, local settings and credentials are ignored. WoW loads Lua directly; no C++ compilation is required. Run Build.ps1 to validate and package in one step. Submission artwork is optional for the build; supply it locally at curseforge/avatar.png when needed, without committing it.
+
+
+## Current security release
+
+Tranquility Toolkit 1.0.0-beta.7 uses a character-bound membership vault, native Dedicated Member-or-higher access checks, profession jobs, player contracts and officer-reviewed payroll/watchdog records. Its bundled LFG is 0.3.0-beta.1; optional Uber is 0.5.0-beta.1 with completed-order star-only feedback. The Discord bot is a separate private guild service and is excluded from these repositories. Run `./scripts/check-public-source.ps1 -Repository .` to check ignore rules and source credential signatures. No game-folder writes, commits, pushes or uploads are performed by Build.ps1.

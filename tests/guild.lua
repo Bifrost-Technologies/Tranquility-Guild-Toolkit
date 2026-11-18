@@ -76,8 +76,8 @@ GetItemInfo=C_Item.GetItemInfo
 C_Map={GetBestMapForUnit=function() return 1 end,GetMapInfo=function() return {name="Elwynn Forest",mapType=3} end}
 Enum={UIMapType={Zone=3}}
 date=os.date
-local files={Recruitment="Recruitment",Regions="Regions",Auctions="Auctions",Loot="Loot",Dungeon="Dungeon",Summons="Summons",Gear="Gear",Phases="Phases",DB="Database",Info="Info"}
-local order={"DB","Loot","Auctions","Recruitment","Regions","Summons","Dungeon","Gear","Phases","Info"}
+local files={Recruitment="Recruitment",Regions="Regions",Auctions="Auctions",Loot="Loot",Dungeon="Dungeon",Summons="Summons",Gear="Gear",Phases="Phases",DB="Database",Info="Info",PvP="PvP"}
+local order={"DB","Loot","Auctions","Recruitment","Regions","Summons","Dungeon","Gear","Phases","Info","PvP"}
 local function dispatch(event,...)
     local snapshot={}; for _,frame in ipairs(frames) do snapshot[#snapshot+1]=frame end
     for _,frame in ipairs(snapshot) do if frame.events[event] and frame.scripts.OnEvent then frame.scripts.OnEvent(frame,event,...) end end
@@ -88,18 +88,24 @@ local function boot(enabled)
     DEFAULT_CHAT_FRAME={AddMessage=noop}; GameTooltip={SetOwner=noop,SetText=noop,Show=noop,Hide=noop}
     TranquilityDB=nil
     for id in pairs(files) do _G["Tranquility"..id.."DB"]=nil end
+    TranquilityAccess=nil;GetGuildInfo=function()return "Tranquility","Dedicated Member",3 end
+    assert(loadfile("guild/Tranquility/Access.lua"))()
+    assert(loadfile("guild/Tranquility/Vault.lua"))()
     assert(loadfile("guild/Tranquility/Core.lua"))("Tranquility",{})
     assert(loadfile("guild/Tranquility/UI.lua"))("Tranquility",{})
     assert(loadfile("guild/Tranquility/RecruitData.lua"))("Tranquility",{})
     assert(loadfile("guild/Tranquility/Settings.lua"))("Tranquility",{})
     assert(loadfile("guild/Tranquility/Who.lua"))("Tranquility",{})
+    for _,file in ipairs({"WorkBoard","Verification","WorkUI","Contracts","ContractUI"})do assert(loadfile("guild/Tranquility/"..file..".lua"))()end
     dispatch("ADDON_LOADED","Tranquility")
     for _,id in ipairs(order) do
         if enabled[id] then
             assert(loadfile("guild/Tranquility_"..id.."/"..files[id]..".lua"))("Tranquility_"..id,{})
+            if id=="PvP"then for _,name in ipairs({"Alerts","Interface"})do assert(loadfile("guild/Tranquility_PvP/"..name..".lua"))()end end
             dispatch("ADDON_LOADED","Tranquility_"..id)
         end
     end
+    TranquilityDB.security=TranquilityDB.security or {};TranquilityDB.security.vaultUnlocked={character="caster-testrealm",guid="me",confirmed=true}
     dispatch("PLAYER_LOGIN")
     check(#timers==0 and #messages==0 and #inspect==0,"Startup is passive")
     return Tranquility
@@ -261,4 +267,6 @@ check(#broadcasts==1 and broadcasts[1].channel=="PARTY" and #broadcasts[1].messa
 check(broadcasts[1].message:match("^Tranquility:"),"Public party text uses only the public guild branding")
 now=now+16;D:Broadcast(false);check(#broadcasts==2,"A new explicit broadcast is allowed after its cooldown")
 IsInGroup,SendChatMessage=previousGroup,previousChat
+T.work:Show();T.work:ShowContracts();check(T.work.frame:IsShown()and T.work.contractFrame:IsShown(),"Member job and contract panels open")
+GetGuildInfo=function()return "Tranquility","Guild Master",0 end;T.work:ShowAdmin();T.work:ShowPayouts();T.work:ShowVerification();T.work:ShowPayroll();check(T.work.adminFrame:IsShown()and T.work.payrollFrame:IsShown(),"Authorized administration panels open")
 print(("PASS: %d assertions; %d module configurations; public edition contracts"):format(passed,#cases))

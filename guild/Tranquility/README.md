@@ -67,3 +67,8 @@ Current toolkit: 1.0.0-beta.4. The distribution contains the eleven toolkit fold
 
 
 TranquilityLFG 0.2.0-beta.1 adds separate Dungeon/Battleground/Arena pages, casual/ranked planning, bracket ratings when available, an opt-out active-addon directory, green leader flags, role/level/loot-aware proposals and explicitly armed paced formation. Carry mode allows only the lower-level leader. The Discord lounge uses trusted public-channel snapshots and explicit reply handoff to the optional bot; it is not a live external connection. The bot's owner credentials are not configured. No external companion is required for normal LFG.
+
+
+## Dedicated membership and guild work
+
+Tranquility Toolkit now requires native Dedicated Member-or-higher membership. Member recruits verify through the separately configured Discord bot and an authorized officer confirms their native promotion. The tradesman board supports profession bank orders, player help offers, multi-participant mercenary contracts, reviewed payroll and withdrawal flags. Open `/tranq jobs`. Payments, bank privileges and punitive guild actions remain native/manual. See [Membership and jobs](../../curseforge/MEMBERSHIP-AND-JOBS.md) in the submission documentation for policy, workflow and evidence limits.

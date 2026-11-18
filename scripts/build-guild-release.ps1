@@ -3,7 +3,7 @@ $ErrorActionPreference = 'Stop'
 $repo = Split-Path -Parent $PSScriptRoot
 $source = Join-Path $repo 'guild'
 $dist = Join-Path $repo 'share\Tranquility'
-$names = @('Tranquility','Tranquility_Auctions','Tranquility_DB','Tranquility_Dungeon','Tranquility_Gear','Tranquility_Info','Tranquility_Loot','Tranquility_Phases','Tranquility_Recruitment','Tranquility_Regions','Tranquility_Summons')
+$names = @('Tranquility','Tranquility_Auctions','Tranquility_DB','Tranquility_Dungeon','Tranquility_Gear','Tranquility_Info','Tranquility_Loot','Tranquility_Phases','Tranquility_PvP','Tranquility_Recruitment','Tranquility_Regions','Tranquility_Summons')
 $coreManifest = [IO.File]::ReadAllText((Join-Path $source 'Tranquility\Tranquility.toc'))
 $versionMatch = [regex]::Match($coreManifest, '(?m)^## Version: ([0-9]+\.[0-9]+\.[0-9]+(?:-beta\.[0-9]+)?)\r?$')
 if (-not $versionMatch.Success) { throw 'Missing valid public version.' }
@@ -28,6 +28,14 @@ try {
     $testExit = $LASTEXITCODE
     $testOutput | ForEach-Object { Write-Host $_ }
     if ($testExit -ne 0 -or $testOutput.Count -eq 0 -or [string]$testOutput[-1] -notmatch '^PASS: \d+ assertions; \d+ module configurations; public edition contracts$') { throw 'Public addon tests failed. No new ZIP produced.' }
+    $security=@(& $LuaRunner tests/security.lua 2>&1);$security | ForEach-Object {Write-Host $_}
+    if($LASTEXITCODE -ne 0 -or [string]$security[-1] -notmatch '^PASS: \d+ security and guild work assertions$'){throw 'Security validation failed'}
+    $vault=@(& $LuaRunner tests/vault.lua 2>&1);$vault | ForEach-Object {Write-Host $_}
+    if($LASTEXITCODE -ne 0 -or [string]$vault[-1] -notmatch '^PASS: \d+ vault verification assertions$'){throw 'Vault validation failed'}
+    $defense=@(& $LuaRunner tests/defense.lua 2>&1);$defense | ForEach-Object {Write-Host $_}
+    if($LASTEXITCODE -ne 0 -or [string]$defense[-1] -notmatch '^PASS: \d+ world defense assertions$'){throw 'World defense validation failed'}
+    $flights=@(& $LuaRunner tests/flights.lua 2>&1);$flights | ForEach-Object {Write-Host $_}
+    if($LASTEXITCODE -ne 0 -or [string]$flights[-1] -notmatch '^PASS: \d+ flight path finder assertions$'){throw 'Flight Path Finder validation failed'}
     $lfgResults=@()
     foreach($test in @('tests/lfg.lua','tests/lfg-advanced.lua')){
         $output=@(& $LuaRunner $test 2>&1);$output | ForEach-Object {Write-Host $_}
@@ -74,19 +82,24 @@ try {
         if ($entry.Key -notmatch '^Tranquility(?:_[A-Za-z]+)?/(?:[A-Za-z0-9_]+\.(?:lua|toc|md)|LICENSE)$') { throw 'Unsafe archive path' }
     }
     # Uber is a standalone dependency-free addon shared by both editions.
-    foreach ($extra in @('Uber.toc','Uber_Camelot.toc','Uber.lua','Orders.lua','Drivers.lua','Presence.lua','Billing.lua','Administration.lua','Reservations.lua','Delivery.lua','Interface.lua','Roster.lua','ServiceUI.lua','AdminUI.lua','README.md','ADMIN-AND-DELIVERY.md','LICENSE','CHANGELOG.md')) {
+    foreach ($extra in @('Uber.toc','Uber_Camelot.toc','Uber.lua','Orders.lua','Drivers.lua','Presence.lua','Billing.lua','Administration.lua','Reservations.lua','Delivery.lua','Interface.lua','Roster.lua','ServiceUI.lua','AdminUI.lua','NetworkStats.lua','README.md','ADMIN-AND-DELIVERY.md','LICENSE','CHANGELOG.md')) {
         $uberPath=Join-Path $repo ('Uber/' + $extra)
         $uberContent=[IO.File]::ReadAllText($uberPath)
         if($extra -match '\.lua$' -and $uberContent -match $deny){throw "Uber public automation audit failed: $extra"}
         if($uberContent -match $sharingDeny){throw "Uber public sharing audit failed: $extra"}
         $files[('Uber/' + $extra)] = $uberPath
     }
-    foreach($extra in @('TranquilityLFG.toc','TranquilityLFG_Camelot.toc','LFG.lua','Profiles.lua','Builder.lua','Mirror.lua','Interface.lua','README.md','LICENSE')){
+    foreach($extra in @('TranquilityLFG.toc','TranquilityLFG_Camelot.toc','Access.lua','Vault.lua','LFG.lua','Profiles.lua','Builder.lua','Mirror.lua','Interface.lua','README.md','LICENSE')){
         $lfgPath=Join-Path $repo ('TranquilityLFG/'+$extra)
         $content=[IO.File]::ReadAllText($lfgPath)
         if($extra -match '\.lua$' -and $content -match $deny){throw "LFG public automation audit failed: $extra"}
         if($content -match $sharingDeny){throw "LFG public sharing audit failed: $extra"}
         $files[('TranquilityLFG/'+$extra)]=$lfgPath
+    }
+    foreach($extra in @('FlightPathFinder.toc','FlightPathFinder_Camelot.toc','FlightPathFinder.lua','Map.lua','Interface.lua','README.md','LICENSE','CHANGELOG.md')){
+        $path=Join-Path $repo ('FlightPathFinder/'+$extra);$content=[IO.File]::ReadAllText($path)
+        if(($extra -match '\.lua$' -and $content -match $deny) -or $content -match $sharingDeny){throw 'Flight Path Finder public audit failed'}
+        $files[('FlightPathFinder/'+$extra)]=$path
     }
     New-Item -ItemType Directory -Path $dist -Force | Out-Null
     Add-Type -AssemblyName System.IO.Compression
@@ -126,8 +139,12 @@ try {
         "Target: Forever 1.60.1 / Interface $interface",
         "$(Get-Date -Format o)",
         [string]$testOutput[-1],
-        $lfgResults,
-        "PASS: $($names.Count + 2) addon folders (11 toolkit + TranquilityLFG + Uber), $($files.Count) whitelisted files; manifest and archive hashes verified.",
+        ($lfgResults -join "`r`n"),
+        [string]$security[-1],
+        [string]$vault[-1],
+        [string]$defense[-1],
+        [string]$flights[-1],
+        "PASS: $($names.Count + 3) addon folders ($($names.Count) toolkit + TranquilityLFG + Uber + FlightPathFinder), $($files.Count) whitelisted files; manifest and archive hashes verified.",
         'PASS: declared addon files only; no test fixtures, credentials or personal SavedVariables.',
         'PASS: MIT license included in every addon folder.',
         "SHA256: $hash",
@@ -139,10 +156,10 @@ try {
     $submission = Join-Path $dist ('Submission-' + $version)
     New-Item -ItemType Directory -Path $submission -Force | Out-Null
     & (Join-Path $PSScriptRoot 'prepare-discord-readme.ps1') | Write-Host
-    $materials = @('PROJECT.md','FORM-ENTRIES.md','SUMMARY.md','DESCRIPTION.md','FAQ.md','SCREENSHOTS.md','CHANGELOG.md','LIVE-TEST.md','RELEASE-CHECKS.md','POLICY-REVIEW.md','DISCORD-README.md','DISCORD-MIRROR-SETUP.md','LFG-FEATURES.md','SUBMISSION-README.md','avatar.png')
+    $materials = @('PROJECT.md','FORM-ENTRIES.md','SUMMARY.md','DESCRIPTION.md','FAQ.md','SCREENSHOTS.md','CHANGELOG.md','LIVE-TEST.md','RELEASE-CHECKS.md','POLICY-REVIEW.md','DISCORD-README.md','DISCORD-MIRROR-SETUP.md','LFG-FEATURES.md','MEMBERSHIP-AND-JOBS.md','DEFENSE.md','SUBMISSION-README.md','avatar.png')
     foreach ($material in $materials) {
         $path = Join-Path (Join-Path $repo 'curseforge') $material
-        if (-not (Test-Path -LiteralPath $path -PathType Leaf)) { throw "Missing submission material: $material" }
+        if (-not (Test-Path -LiteralPath $path -PathType Leaf)) { if($material -eq 'avatar.png'){continue};throw "Missing submission material: $material" }
         if ($material -ne 'avatar.png' -and [IO.File]::ReadAllText($path) -match $sharingDeny) { throw "Submission material sharing audit failed: $material" }
         Copy-Item -LiteralPath $path -Destination $submission -Force
     }

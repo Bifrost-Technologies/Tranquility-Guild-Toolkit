@@ -2,7 +2,7 @@
 ## Title: Tranquility: Auctions
 ## Notes: Manual asking-price samples, historical baselines and farming candidates.
 ## Author: Tranquility Guild
-## Version: 1.0.0-beta.4
+## Version: 1.0.0-beta.10
 ## X-License: MIT
 ## Dependencies: Tranquility
 ## SavedVariables: TranquilityAuctionsDB

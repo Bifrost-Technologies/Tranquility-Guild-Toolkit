@@ -2,7 +2,7 @@
 ## Title: Tranquility: Phases
 ## Notes: Read-only regional channel observations and manual peer comparisons.
 ## Author: Tranquility Guild
-## Version: 1.0.0-beta.4
+## Version: 1.0.0-beta.10
 ## X-License: MIT
 ## Dependencies: Tranquility
 
