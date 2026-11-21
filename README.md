@@ -2,8 +2,6 @@
 
 A modular guild toolkit specifically for Tranquility for World of Warcraft: Forever: private group finding, manual recruitment preparation, loot notes, auction research, dungeon information and a party summons checklist.
 
-Current toolkit: **1.0.0-beta.4**, targeting **Interface 16001**. Bundled companions: **TranquilityLFG 0.2.0-beta.1** and optional **Uber 0.4.0-beta.1**. Open **`/tranq`** or **`/tq`**. The author is awaiting the separate Uber submission outcome before publication; this source snapshot does not claim platform approval.
-
 Feel free to fork for your own guild!
 
 ## Features
