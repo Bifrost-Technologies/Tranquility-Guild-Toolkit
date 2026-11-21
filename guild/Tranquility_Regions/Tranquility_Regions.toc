@@ -2,7 +2,7 @@
 ## Title: Tranquility: Regions
 ## Notes: Manual WHO region samples and gathering population hints.
 ## Author: Tranquility Guild
-## Version: 1.0.0-beta.14
+## Version: 1.0.0-beta.15
 ## X-License: MIT
 ## Dependencies: Tranquility
 ## SavedVariables: TranquilityRegionsDB

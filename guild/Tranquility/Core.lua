@@ -1,5 +1,5 @@
 local addonName = ...
-local T = { version = "1.0.0-beta.14", modules = {}, db = {}, errors = {}, farmItems = {}, farmByID = {} }
+local T = { version = "1.0.0-beta.15", modules = {}, db = {}, errors = {}, farmItems = {}, farmByID = {} }
 _G.Tranquility = T
 local catalog = {
     {"Recruitment", "Recruitment", "Guildless WHO results, manual greetings and invite commands."},

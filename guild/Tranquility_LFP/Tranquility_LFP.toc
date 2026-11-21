@@ -2,7 +2,7 @@
 ## Title: Tranquility: LFP
 ## Notes: Guild and public city profession finder. Open /lfp.
 ## Author: Tranquility Guild
-## Version: 1.0.0-beta.14
+## Version: 1.0.0-beta.15
 ## X-License: MIT
 ## Dependencies: Tranquility, LookingForProfession
 Bridge.lua

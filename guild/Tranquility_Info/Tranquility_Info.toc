@@ -2,7 +2,7 @@
 ## Title: Tranquility: Info
 ## Notes: Instructions, local data controls, settings and diagnostics.
 ## Author: Tranquility Guild
-## Version: 1.0.0-beta.14
+## Version: 1.0.0-beta.15
 ## X-License: MIT
 ## Dependencies: Tranquility
 

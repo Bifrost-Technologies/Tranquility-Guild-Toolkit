@@ -13,16 +13,16 @@ Feel free to fork for your own guild!
 - An opt-out active-member directory, separate from the ready queue, with green leader flags.
 - Leader-armed, paced formation using roles, level ranges, armor/stat intent and desired item IDs; soft loot warnings and leader-only carry mode.
 - Observed loot/source journal, asking-price research, target equipment information, manual WHO samples and phase hints.
-- A physical-click summons checklist; optional Uber opens its separate booking/service interface.
+- A physical-click summons checklist; standalone download pages provide copyable CurseForge links.
 - A Discord lounge for trusted-officer public-channel snapshots and acknowledged reply handoff. It is not a direct live Discord connection.
 
 Dungeon XP warnings are a separate automatic, rate-limited party-message feature. `/tranqxp off` disables them for the session. Recruitment remains per-player/manual. LFG formation sends native invitation attempts only when the leader explicitly arms it; it does not enter Blizzard matchmaking or bypass native restrictions.
 
 ## Install
 
-Use the named toolkit ZIP from a release. Extract its **13 addon folders** directly into `Interface/AddOns`, with no enclosing toolkit folder. Keep `Tranquility` enabled for its ten modules; `TranquilityLFG` and `Uber` are separately enableable companions. Restart after a fresh install. Use `/tqlfg` for group finding and `/uber` for the optional service interface.
+Use the named toolkit ZIP from a release. Extract its 12 toolkit folders and `TranquilityLFG` directly into `Interface/AddOns`, with no enclosing toolkit folder. Keep `Tranquility` enabled for its modules. Download Uber, Flight Path Finder, World Navigation and Looking For Profession separately using the dashboard links. The toolkit does not start or embed them. Restart after a fresh install. Use `/tqlfg` for the existing guild board; Enhanced LFG is planned separately.
 
-From a source checkout, copy the eleven `guild/Tranquility*` addon folders plus the root `TranquilityLFG/` and optional `Uber/` folders. Do not install this entire repository as one addon folder.
+From a source checkout, use `release.json` and `scripts/release.py` to build the current manifest-only install ZIP. Do not install this entire repository as one addon folder.
 
 ## Source layout
 

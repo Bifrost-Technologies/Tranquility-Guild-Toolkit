@@ -1,3 +1,7 @@
+## 1.0.0-beta.15
+
+Replace standalone integrations with copyable CurseForge download pages; exclude standalone addon distributions from the guild install ZIP. Keep protected controls out of the dashboard hierarchy so ordinary navigation/closing remains available in combat. Repair guild work settings and stop reporting unsent claims/deliveries when the queue is full. Existing guild LFG remains bundled. Automated module/security/runtime regressions pass; live combat UI testing is pending.
+
 ## 1.0.0-beta.14
 
 Current dashboard and public companion modules assembled with matching toolkit version metadata. Private automation and development material excluded.

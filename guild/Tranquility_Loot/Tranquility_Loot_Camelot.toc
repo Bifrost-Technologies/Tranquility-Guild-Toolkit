@@ -2,7 +2,7 @@
 ## Title: Tranquility: Loot
 ## Notes: Local loot and roll source journal for dungeons and the open world.
 ## Author: Tranquility Guild
-## Version: 1.0.0-beta.14
+## Version: 1.0.0-beta.15
 ## X-License: MIT
 ## Dependencies: Tranquility
 ## SavedVariables: TranquilityLootDB

@@ -2,7 +2,7 @@
 ## Title: Tranquility
 ## Notes: Guild toolkit. Open with /tranq. Optional modules can be disabled separately.
 ## Author: Tranquility Guild
-## Version: 1.0.0-beta.14
+## Version: 1.0.0-beta.15
 ## OptionalDeps: Uber, FlightPathFinder
 ## X-License: MIT
 ## SavedVariables: TranquilityDB
