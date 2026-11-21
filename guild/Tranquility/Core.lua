@@ -1,5 +1,5 @@
 local addonName = ...
-local T = { version = "1.0.0-beta.10", modules = {}, db = {}, errors = {}, farmItems = {}, farmByID = {} }
+local T = { version = "1.0.0-beta.14", modules = {}, db = {}, errors = {}, farmItems = {}, farmByID = {} }
 _G.Tranquility = T
 local catalog = {
     {"Recruitment", "Recruitment", "Guildless WHO results, manual greetings and invite commands."},
@@ -87,9 +87,9 @@ function T:Show()
     if not TranquilityAccess or not TranquilityAccess:Require()then return end
     local UI = self.featureUI
     if not self.frame then
-        local f = UI.Panel("TranquilityHome", "TRANQUILITY / GUILD TOOLKIT", 780, 715)
+        local f = UI.Panel("TranquilityHome", "TRANQUILITY / GUILD TOOLKIT", 1180, 715)
         self.frame = f
-        UI.Label(f, "Open a tool below. Disable optional tools in WoW's AddOns menu.\nYour data stays local; recruitment and messaging always require your own actions.", 22, -55, 730, 40)
+        UI.Label(f, "Open a tool below. Automatic feature switches are on the right.\nYour data stays local; recruitment and messaging always require your own actions.", 22, -55, 730, 40)
         self.moduleLabels = {}
         for i, item in ipairs(catalog) do
             local y = -108 - (i-1)*46
@@ -98,6 +98,7 @@ function T:Show()
         end
         UI.Button(f,"PvP command center",22,-646,355,function()if self.defense then self.defense:Show()else self:Notify("Enable Tranquility: PvP in the AddOns menu.")end end)
         UI.Button(f,"Flight Path Finder",396,-646,360,function()if _G.FlightPathFinder then FlightPathFinder:Show()else self:Notify("Enable Flight Path Finder in AddOns, then /fpf.")end end)
+        UI.Button(f,"Profession finder",778,-646,370,function()self:OpenModule("LFP")end)
         self.footer = UI.Label(f, "", 22, -585, 730, 55)
         UI.Button(f,"Uber summons requests",22,-558,200,function()
             if _G.Uber then _G.Uber:Show()else self:Notify("Enable the standalone Uber addon, then /uber.")end
@@ -113,10 +114,12 @@ function T:Show()
     end
     self.footer:SetText("/tranq or /tq opens this menu. Version " .. self.version ..
         "\nUse Help and settings for instructions and local data controls.")
+    if self.BuildQuickControls then self:BuildQuickControls();self:RefreshQuickControls()end
     self.frame:Show()
 end
 function T:EnsureLauncher()
-    if self.launcher or not TranquilityAccess or not TranquilityAccess:Allowed()or not TranquilityDB or TranquilityDB.hideLauncher or not Minimap then return end
+    if self.launcher then if TranquilityAccess and TranquilityAccess:Allowed()and not(TranquilityDB and TranquilityDB.hideLauncher)then self.launcher:Show()else self.launcher:Hide()end;return end
+    if not TranquilityAccess or not TranquilityAccess:Allowed()or not TranquilityDB or TranquilityDB.hideLauncher or not Minimap then return end
     local b=CreateFrame("Button","TranquilityLauncher",Minimap,"UIPanelButtonTemplate");b:SetSize(32,25);b:SetPoint("TOPLEFT",-12,8);b:SetText("TQ")
     b:SetScript("OnClick",function()T:Show()end);self.launcher=b
 end
@@ -133,7 +136,7 @@ events:SetScript("OnEvent", function(_, event, name, action)
         end
     elseif event == "PLAYER_LOGIN" then
         if not TranquilityAccess then return end
-        if not TranquilityAccess:Allowed()then if not(TranquilityDB and TranquilityDB.security and TranquilityDB.security.vaultClosed)then TranquilityAccess:Require()end;return end
+        if not TranquilityAccess:Allowed()then if not(TranquilityDB and TranquilityDB.security and TranquilityDB.security.accessClosed)then TranquilityAccess:Require()end;return end
         T:EnsureLauncher()
     elseif type(name) == "string" and name:match("^Tranquility") then
         T:Fault(name, event .. " " .. tostring(action))
@@ -150,6 +153,7 @@ SlashCmdList.TRANQUILITY = function(text)
     if key=="jobs"or key=="work"then if T.work then T.work:Show()end
     elseif key=="flights"or key=="flightpaths"then if _G.FlightPathFinder then FlightPathFinder:Show()else T:Notify("Enable Flight Path Finder in AddOns.")end
     elseif key=="defense"or key=="pvp"then if T.defense then T.defense:Show()else T:Notify("Enable Tranquility: PvP in the AddOns menu.")end
+    elseif key == "lfp" then T:OpenModule("LFP")
     elseif key == "settings" then T:ShowRecruitSettings()
     elseif key == "help" then T:OpenModule("Info")
     elseif key then

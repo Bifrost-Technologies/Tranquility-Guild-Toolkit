@@ -1,14 +1,62 @@
-# Tranquility release how-to
+# Tranquility Guild Toolkit — release form
 
-Current prepared toolkit: **1.0.0-beta.4**. Bundled TranquilityLFG: **0.2.0-beta.1**. Bundled optional Uber: **0.4.0-beta.1**. The author is waiting for Uber's separate review outcome before publishing the combined toolkit.
+Prepared November 20, 2026. Current package **1.0.0-beta.14**. Files are prepared locally; no submission, approval, remote workflow run or live-client certification is claimed.
 
-1. For a toolkit version change, update both TOCs in all eleven `guild/Tranquility*` folders and `guild/Tranquility/Core.lua`. Keep generic/Camelot files matched. Companion versions remain independently managed.
-2. Update `guild/Tranquility/CHANGELOG.md`, the root changelog, player guides and `curseforge/` author materials. Keep `curseforge/CHANGELOG.md` synchronized too.
-3. If updating bundled Uber, bring its reviewed runtime files/license/changelog from the separate Uber repository deliberately. Validate the exact version you intend to distribute; another file's approval is not automatic approval for this bundle.
-4. Run `Build.ps1`. Review toolkit/module and LFG PASS results, source/manifest audits, installable-root counts and per-file hashes. Run standalone companion builds if those sources changed.
-5. Complete affected live checks in `curseforge/LIVE-TEST.md`. Test native invitation permissions, rank availability, role/loot/carry filters, queue/discovery distinctions, optional Discord handoff and addon coexistence. Never include actual account data or bot credentials as fixtures.
-6. In GitHub Desktop, inspect the source diff, commit and push. Do not commit generated ZIPs or author handoff copies.
-7. Create a GitHub Release for that reviewed commit/tag. Attach `share/Tranquility/Tranquility-Guild-Toolkit-<version>.zip` and checksum. The install archive contains 13 direct addon roots. Do not install the repository/source archive as one addon.
-8. Use `submission/Tranquility/START-HERE.md` and the generated author folder for CurseForge forms. Upload the named ZIP alone to the existing project, selecting only the supported tested game flavor and appropriate Beta/Release type.
+## Project fields
 
-The optional Discord bot is not part of this public repository/package. Its owner-managed setup is documented, but no credentials or automatic deployment are supplied. No GitHub push, tag, release or CurseForge upload is performed by these scripts.
+| Field | Value |
+| --- | --- |
+| Game | World of Warcraft |
+| Project name | Tranquility Guild Toolkit |
+| Proposed slug | tranquility-guild-toolkit (use the existing project's slug when updating) |
+| Summary | A modular guild dashboard for recruitment, groups, loot, auctions, summons and flight guidance. |
+| Class | Addons |
+| Main / additional categories | Guild; Chat & Communication; Auction & Economy; Map & Minimap — select matching labels available in the form |
+| License | MIT, matching bundled source LICENSE notices; retain third-party asset notices |
+| Logo/avatar | Select an original project PNG (minimum 400×400); no project avatar has been selected by this preparation. |
+| Allow comments | Enabled |
+| Listing visibility | Public; do not enable experimental/unlisted unless deliberately desired |
+| Description format | Markdown; paste the description below |
+| Author / members | Your actual CurseForge publishing account and actual contributors |
+| Project ID | Use this addon's assigned numeric CurseForge ID; not available from local source |
+| Source URL | https://github.com/BifrostTitan/Tranquility-Guild-Toolkit |
+| Issues / wiki | Use actual published URLs; otherwise leave blank and use CurseForge comments |
+| Donation / social links | Optional; leave blank unless you supply real links |
+| Screenshots | Add real addon screenshots; no new screenshots are included in this handoff |
+
+## Description — copy/paste
+
+Open a compact dashboard with left-side navigation for guild information, recruitment, loot, auction research, member tools and services. The bundle includes separate guild modules, Tranquility Guild LFG, Uber, Looking For Profession Finder, Flight Path Finder and public World Navigation. Modules can be enabled separately; guild-only features retain their guild access rules. Recruitment messages are optional, and native game permissions still apply to invitations and services. Recorded guild activity reflects events observed by participating addons, not a complete server history. Flight guidance draws paths only. No private Titans toolkit, combat farming, external executables or automated travel is included.
+
+Built for **Forever WoW 1.60.1 / Interface 16001**. Open `/tranq`. Other Retail/Classic clients are not certified by this release. Native game restrictions and unavailable APIs still apply.
+
+## File upload fields
+
+| Field | Value |
+| --- | --- |
+| Upload file | `Tranquility-Guild-Toolkit-1.0.0-beta.14.zip` — upload this ZIP alone |
+| Display name | Tranquility Guild Toolkit 1.0.0-beta.14 |
+| Release type | Beta |
+| Release options | Release after moderation approval, or choose manual scheduling in your account |
+| Supported client / version | Forever WoW 1.60.1, Interface 16001. Select its actual supported entry if offered; do not relabel it as another client. Confirm with CurseForge support if this client is not listed. |
+| Related projects | No external required downloads: included modules resolve their dependencies inside this ZIP. |
+| SHA-256 | `10cacf94d69059bd0edd8a6cfeeb2252f2f720831d6efc51bfd42ec0b1e248f7` |
+| ZIP root addon folders (18) | `Tranquility`, `Tranquility_Auctions`, `Tranquility_DB`, `Tranquility_Dungeon`, `Tranquility_Gear`, `Tranquility_Info`, `Tranquility_LFP`, `Tranquility_Loot`, `Tranquility_Phases`, `Tranquility_PvP`, `Tranquility_Recruitment`, `Tranquility_Regions`, `Tranquility_Summons`, `Uber`, `FlightPathFinder`, `LookingForProfession`, `TranquilityLFG`, `WorldNavigation` |
+
+### Changelog — copy/paste
+
+Current dashboard and public companion modules assembled with matching toolkit version metadata. Private automation and development material excluded.
+
+Packaging verified direct addon-root layout, manifest-declared files, matching generic/Camelot manifests, ZIP decompression/CRC and SHA-256. No gameplay or test suites were run for this packaging pass. Runtime limits are described above and in bundled READMEs.
+
+## GitHub commit packaging
+
+The repository's `.github/workflows/release.yml` builds an artifact on pushes. In GitHub Settings → Secrets and variables → Actions, set secret `CF_API_TOKEN`, variable `CF_PROJECT_ID`, and variable `CF_GAME_VERSION_IDS` with real supported numeric version IDs. No account tokens are stored in this document. Default-branch commits upload Alpha files when configured; a tag `v1.0.0-beta.14` uploads this Beta version. Generated ZIPs remain local build artifacts; commit source/configuration instead. Do not use duplicate CurseForge webhooks and Actions upload for the same commit.
+
+Remote publication/configuration has not been performed. Missing logo, project ID, real supported-version selection or unpublished source URLs are author/account fields to complete before submitting. Private toolkit/helpers/recorders and private development reports are excluded.
+
+## Official field references
+
+- [Creating and submitting a project](https://support.curseforge.com/support/solutions/articles/9000197241)
+- [Submission fields, original logo and project links](https://support.curseforge.com/support/solutions/articles/9000199552-project-submission-guide-and-tips)
+- [Upload API](https://support.curseforge.com/support/solutions/articles/9000197321)

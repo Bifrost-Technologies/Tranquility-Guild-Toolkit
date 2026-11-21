@@ -16,14 +16,16 @@ function F:Render()
     pin:SetScript('OnEnter',function(p)
      if not GameTooltip or not p.node then return end;local n=p.node;GameTooltip:SetOwner(p,'ANCHOR_RIGHT');GameTooltip:SetText(n.name)
      GameTooltip:AddLine('Flight master / departure point',.6,.85,1);GameTooltip:AddLine((n.zone or 'Map '..n.map)..(' · %.1f, %.1f'):format(n.x*100,n.y*100),1,1,1)
-     local known=self.character.nodes[n.id];GameTooltip:AddLine(known==true and 'Learned on this character'or known==false and 'Not yet learned'or 'Discovery state unavailable',1,.85,.35)
-     GameTooltip:AddLine(n.faction==0 and 'Neutral hub usable by Alliance'or 'Alliance flight point',.6,.85,1);GameTooltip:AddLine('Click to locate. Visit the flight master to unlock or fly.',.8,.8,.8,true);GameTooltip:Show()
+     local known=self.character.nodes[n.id];GameTooltip:AddLine(self:DiscoveryText(n),1,.85,.35)
+     GameTooltip:AddLine(n.faction==0 and 'Neutral flight hub'or (n.faction==1 and 'Horde flight point'or 'Alliance flight point'),.6,.85,1);GameTooltip:AddLine('Click to locate. Visit the flight master to unlock or fly.',.8,.8,.8,true);GameTooltip:Show()
     end);pin:SetScript('OnLeave',function()if GameTooltip then GameTooltip:Hide()end end)
     pin:SetScript('OnClick',function(p)if p.node then self:Locate(p.node)end end)
    end
    pin.node=node;pin:SetParent(canvas);pin:ClearAllPoints();pin:SetPoint('CENTER',canvas,'TOPLEFT',x*width,-y*height);pin:SetSize(self.db.size,self.db.size)
-   local atlas=node.atlas;local applied=false;if atlas and pin.icon.SetAtlas then local ok,value=pcall(pin.icon.SetAtlas,pin.icon,atlas);applied=ok and value~=false end
-   if not applied then pin.icon:SetTexture('Interface\\Icons\\Ability_Mount_Gryphon_01')end
+   local atlas=node.atlas; -- Preserve the client-provided flight marker artwork.
+   local applied=false;if atlas and pin.icon.SetAtlas then local ok,value=pcall(pin.icon.SetAtlas,pin.icon,atlas);applied=ok and value~=false end
+   if not applied then pin.icon:SetTexture('Interface\\AddOns\\FlightPathFinder\\FlightPathIcon')end
+   pin.icon:SetVertexColor(1,1,1)
    pin.caption:SetText(self.db.labels and node.name or '');pin:SetAlpha(self.selected==node.id and 1 or .92);pin:Show()
   end
  end

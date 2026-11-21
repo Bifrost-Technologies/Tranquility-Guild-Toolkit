@@ -2,7 +2,7 @@
 ## Title: Tranquility
 ## Notes: Guild toolkit. Open with /tranq. Optional modules can be disabled separately.
 ## Author: Tranquility Guild
-## Version: 1.0.0-beta.10
+## Version: 1.0.0-beta.14
 ## OptionalDeps: Uber, FlightPathFinder
 ## X-License: MIT
 ## SavedVariables: TranquilityDB
@@ -11,6 +11,8 @@ Access.lua
 Vault.lua
 Core.lua
 UI.lua
+EnemyMarkers.lua
+QuickControls.lua
 RecruitData.lua
 Settings.lua
 Who.lua
@@ -20,3 +22,6 @@ Verification.lua
 WorkUI.lua
 Contracts.lua
 ContractUI.lua
+
+Dashboard.lua
+DashboardIntegration.lua

@@ -1,3 +1,13 @@
+## 1.0.0-beta.14
+
+Current dashboard and public companion modules assembled with matching toolkit version metadata. Private automation and development material excluded.
+
+Private executables/automation excluded. Packaging-only review; no new gameplay or test suites. Client: Forever WoW 1.60.1 / Interface 16001.
+
+## 1.0.0-beta.12
+
+Updated bundled public navigation, Uber and profession modules with the source-audit corrections. Source/syntax review only; no behavioral/live tests run.
+
 # 1.0.0-beta.10
 
 - Bundled standalone Flight Path Finder 0.1.0-beta.1 with large Alliance/neutral flight-node map pins and native coordinate directory.
@@ -87,3 +97,12 @@ Initial public Tranquility Guild Toolkit beta.
 Target: Forever 1.60.1, Interface 16001. Offline contract checks pass; live
 client smoke tests and CurseForge moderation remain required. Do not label
 this beta as a stable release solely because offline checks pass.
+
+## 1.0.0-beta.11
+
+- Added a scrollable Automatic features section directly to the main menu, with saved settings, dependency hints and unavailable-module states.
+- Included the missing local NPC/player nameplate enhancement renderer in the guild toolkit, with independent effect switches and guild-access checks.
+- Linked existing PvP scouting/alert and Flight Path Finder settings to the main menu.
+- Added a passive loot-journal recording switch that preserves existing history.
+- Fixed restoring an already-created minimap launcher after hiding it.
+- Added behavioral tests for immediate effects, persistence, optional-module absence, guild access and combat-safe game settings.

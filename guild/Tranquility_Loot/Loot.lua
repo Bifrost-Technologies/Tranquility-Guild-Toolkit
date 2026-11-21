@@ -187,6 +187,7 @@ function L:History(encounterID, lootKey)
     end
 end
 function L:OnEvent(event, a, b, c, d)
+    if TranquilityDB and TranquilityDB.automatic and TranquilityDB.automatic.loot==false then return end
     if not self.db then return end
     if event == "LOOT_OPENED" then self:ReadWindow()
     elseif event == "CHAT_MSG_LOOT" then self:ChatLoot(a)

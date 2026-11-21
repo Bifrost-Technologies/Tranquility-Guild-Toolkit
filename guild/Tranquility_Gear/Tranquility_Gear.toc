@@ -2,7 +2,7 @@
 ## Title: Tranquility: Gear
 ## Notes: Manually inspected rarity score and item-level snapshots.
 ## Author: Tranquility Guild
-## Version: 1.0.0-beta.10
+## Version: 1.0.0-beta.14
 ## X-License: MIT
 ## Dependencies: Tranquility
 

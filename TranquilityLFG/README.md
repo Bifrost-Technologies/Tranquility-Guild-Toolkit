@@ -1,6 +1,6 @@
 # Tranquility Guild LFG
 
-Version **0.2.0-beta.1**, Forever Interface 16001. Open **/tqlfg** or use the guild toolkit's Guild LFG button. Members of the guild named Tranquility use the same addon for dungeon teams, battleground planning, arena partners and a public-Discord snapshot lounge.
+Version **0.3.0-beta.2**, Forever Interface 16001. Open **/tqlfg** or use the guild toolkit's Guild LFG button. Members of the guild named Tranquility use the same addon for dungeon teams, battleground planning, arena partners and a public-Discord snapshot lounge.
 
 ## Three activity pages
 

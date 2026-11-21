@@ -7,13 +7,18 @@ function F:Vector(v)if not v or not v.GetXY then return end;local x,y=self:Call(
 function F:Init()
  FlightPathFinderDB=type(FlightPathFinderDB)=='table'and FlightPathFinderDB or {};self.db=FlightPathFinderDB
  if self.db.enabled==nil then self.db.enabled=true end;if self.db.neutral==nil then self.db.neutral=true end;self.db.size=self:Number(self.db.size,24,64)or 38
+ if self.db.pathing==nil then self.db.pathing=false end
+ self.db.minimapAngle=self:Number(self.db.minimapAngle,-360,360)or 225
  FlightPathFinderCharDB=type(FlightPathFinderCharDB)=='table'and FlightPathFinderCharDB or {};self.character=FlightPathFinderCharDB;self.character.nodes=self.character.nodes or {}
+ if self.character.discoverySchema~=2 then self.character.nodes={};self.character.discoveryEvidence={};self.character.discoverySchema=2 end
+ self.character.discoveryEvidence=self.character.discoveryEvidence or {}
  self:QueueMap(1414);self:QueueMap(1415);self:QueueMap(946);self:QueueMap(947)
  local api=C_Map
  if api and api.GetMapChildrenInfo then
   for _,root in ipairs({947,946,1414,1415})do local rows=self:Call(api.GetMapChildrenInfo,root,nil,true);if type(rows)=='table'then for i=1,math.min(2000,#rows)do local row=rows[i];if row then self:QueueMap(pub(row.mapID))end end end end
  end
  self:QueueMap(self:Call(api and api.GetBestMapForUnit,'player'))
+ if self.EnsureMinimap then self:EnsureMinimap()end
 end
 function F:Rescan()
  self.queue={};self.queued={};self.maps={};self:Init()
@@ -36,7 +41,7 @@ function F:ScanMap(map,force)
  for i=1,math.min(1000,#rows)do local row=rows[i]
   if type(row)=='table'then
    local id,faction,name=pub(row.nodeID),pub(row.faction),pub(row.name);local x,y=self:Vector(pub(row.position))
-   if self:Number(id,1,999999)and id%1==0 and(faction==2 or faction==0)and type(name)=='string'and #name>0 and #name<=200 and not name:find('[%c|]')and x and y then
+   if self:Number(id,1,999999)and id%1==0 and(faction==2 or faction==1 or faction==0)and type(name)=='string'and #name>0 and #name<=200 and not name:find('[%c|]')and x and y then
     local node=self.nodes[id];local n=self.nodeCount or 0
     if node or n<2000 then
      if not node then node={id=id,views={}};self.nodes[id]=node;self.nodeCount=n+1 end
@@ -49,7 +54,7 @@ function F:ScanMap(map,force)
       if detailRank>(node.rank or -1)then local dx,dy=self:Convert(map,x,y,detailID);if dx then node.map,node.x,node.y,node.rank=detailID,dx,dy,detailRank;node.zone=pub(detailed.name)or node.zone;node.views[detailID]={x=dx,y=dy}end end
       self:QueueMap(detailID)
      end
-     local unknown=pub(row.isUndiscovered);if type(unknown)=='boolean'then self.character.nodes[id]=not unknown end
+     local unknown=pub(row.isUndiscovered);if unknown==true then self.character.nodes[id]=false;self.character.discoveryEvidence[id]='native-undiscovered' end
     end
    end
   end
@@ -58,7 +63,7 @@ function F:ScanMap(map,force)
 end
 function F:List(query)
  local list={};query=type(query)=='string'and query:lower()or ''
- for _,node in pairs(self.nodes)do if(node.faction==2 or self.db.neutral)and(query==''or(node.name..' '..(node.zone or '')):lower():find(query,1,true))then list[#list+1]=node end end
+ for _,node in pairs(self.nodes)do if(node.faction==(self:Call(UnitFactionGroup,'player')=='Horde'and 1 or 2)or node.faction==0 and self.db.neutral)and(query==''or(node.name..' '..(node.zone or '')):lower():find(query,1,true))then list[#list+1]=node end end
  table.sort(list,function(a,b)if a.zone~=b.zone then return(a.zone or '')<(b.zone or '')end;return a.name<b.name end);return list
 end
 function F:Convert(map,x,y,target)
@@ -79,19 +84,39 @@ function F:Locate(node)
  if not WorldMapFrame or not WorldMapFrame.SetMapID then return false end
  WorldMapFrame:Show();WorldMapFrame:SetMapID(node.map);self.selected=node.id;self:Render();return true
 end
+function F:CaptureLearnedNodes()
+ -- Only a flight master's open taxi map provides positive discovery evidence.
+ local taxiMap=self:Call(GetTaxiMapID)
+ if not taxiMap then return end
+ local rows=self:Call(C_TaxiMap and C_TaxiMap.GetAllTaxiNodes,taxiMap)
+ if type(rows)~='table'then return end
+ local states=Enum and Enum.FlightPathState
+ for _,row in ipairs(rows)do
+  local id,state=pub(row.nodeID),pub(row.state)
+  if self:Number(id,1,999999)and (state==(states and states.Current or 0)or state==(states and states.Reachable or 1))then
+   self.character.nodes[id]=true;self.character.discoveryEvidence[id]='flight-master-confirmed'
+  end
+ end
+end
+function F:DiscoveryText(node)
+ local known=self.character.nodes[node.id]
+ return known==true and 'Confirmed learned'or known==false and 'Not learned'or 'Discovery unknown — visit a flight master to confirm'
+end
 local frame=CreateFrame('Frame')
 for _,event in ipairs({'ADDON_LOADED','PLAYER_LOGIN','TAXIMAP_OPENED','TAXI_NODE_STATUS_CHANGED'})do pcall(frame.RegisterEvent,frame,event)end
 frame:SetScript('OnEvent',function(_,event,name)
  if event=='ADDON_LOADED'then if name=='FlightPathFinder'then F:Init()end;return end
  if not F.db then return end
  local map=F:Call(C_Map and C_Map.GetBestMapForUnit,'player');if map then F:ScanMap(map,true)end
- if event=='TAXIMAP_OPENED'or event=='TAXI_NODE_STATUS_CHANGED'then for _,id in ipairs({1414,1415})do F:ScanMap(id,true)end end
+ if event=='TAXIMAP_OPENED'or event=='TAXI_NODE_STATUS_CHANGED'then F:CaptureLearnedNodes();for _,id in ipairs({1414,1415})do F:ScanMap(id,true)end end
  if F.Refresh then F:Refresh()end
+ if F.EnsureMinimap then F:EnsureMinimap()end
 end)
 local elapsed=0;frame:SetScript('OnUpdate',function(_,dt)
  if not F.db then return end;elapsed=elapsed+dt;if elapsed<.5 then return end;elapsed=0
  for _=1,2 do local map=table.remove(F.queue,1);if map then F:ScanMap(map)end end
  if WorldMapFrame and WorldMapFrame.IsShown and WorldMapFrame:IsShown()then local id=WorldMapFrame.GetMapID and WorldMapFrame:GetMapID();if id then F:ScanMap(id)end end
  if F.Render then F:Render()end;if F.Refresh then F:Refresh()end
+ if F.UpdatePath then F:UpdatePath()end
 end)
 SLASH_FLIGHTPATHFINDER1='/fpf';SLASH_FLIGHTPATHFINDER2='/flightpaths';SlashCmdList.FLIGHTPATHFINDER=function()F:Show()end

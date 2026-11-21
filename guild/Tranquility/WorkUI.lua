@@ -84,7 +84,7 @@ function W:ShowVerification()
   U.Button(f,"Refresh native guild roster",455,-210,414,function()local api=C_GuildInfo and C_GuildInfo.GuildRoster or GuildRoster;if api then pcall(api)end;A:RefreshRoster();self:Refresh()end)
   self.verificationDetail=U.Label(f,"",24,-265,845,170)
   U.Button(f,"Next request",24,-460,180,function()self.verifyIndex=(self.verifyIndex or 1)+1;self:Refresh()end)
-  U.Button(f,"Send in-game vault code",215,-460,280,function()if self.verifyCode then self:IssueVault(self.verifyCode)end end)
+  U.Label(f,"Optional Discord rank linking; not required to enter the toolkit.",215,-460,280,45)
   U.Button(f,"Request native promotion",510,-460,359,function()if self.verifyCode then self:PromoteVerified(self.verifyCode)end;self:Refresh()end)
   self.verifyExport=U.Edit(f,"",24,-520,845);self.verifyExport:SetMaxLetters(16000)
   U.Button(f,"Copy confirmed rank links for bot",24,-565,845,function()self.verifyExport:SetText(self:VerificationExport());self.verifyExport:SetFocus();self.verifyExport:HighlightText(0,-1)end)
@@ -104,7 +104,7 @@ function W:Refresh()
   self.detail:SetText(j.title.."\nOwner: "..j.owner.." · "..j.status.." · Assigned: "..(j.assignee or "nobody").."\n"..j.kind.." · Item "..j.item.." x"..j.quantity.." · Bank tab "..j.tab.." · Reward "..money(j.reward).."\nObserved deposits "..deposit.." / withdrawals "..withdraw..". Officer review required.\n"..(d.pending[j.id]and d.pending[j.id].status or ""))
  else self.detail:SetText("Select a job. Profession categories include gathering, cooking, First Aid, fishing, all craftsmanship, specializations and mercenary/service work. Client-specific professions are planning labels; the addon cannot grant recipes or skills.")end
  local activity=self:SummonStats(GetUnitName("player",true))
- self.status:SetText(self.notice or ("Summons today: "..activity.summons.." / guild recipients: "..activity.guildies..". ").."Only Dedicated Member or higher in Tranquility can use the toolkit. Deposits must match the assigned job; withdrawals are flagged for review. Watchdog evidence exists only while an authorized client can access bank logs.")
+ self.status:SetText(self.notice or ("Summons today: "..activity.summons.." / guild recipients: "..activity.guildies..". ").."All Tranquility guild members can enter the toolkit. Job, payout and officer permissions remain separate. Deposits must match the assigned job; withdrawals are flagged for review.")
  if self.auditText then local lines={};for i=math.max(1,#d.audit-2),#d.audit do local e=d.audit[i];lines[#lines+1]=e.kind.." · "..e.who.." · "..e.detail end;self.auditText:SetText(table.concat(lines,"\n"))end
  if self.verificationDetail then local codes={};for code in pairs(d.verification)do codes[#codes+1]=code end;table.sort(codes);self.verifyIndex=((self.verifyIndex or 1)-1)%math.max(1,#codes)+1;self.verifyCode=codes[self.verifyIndex];local r=self.verifyCode and d.verification[self.verifyCode];self.verificationDetail:SetText(r and (r.name.."\nDiscord account ID: "..r.discord.."\n"..r.status.."\nExpires: "..tostring(r.expires))or "No imported verification requests. The external bot must be configured locally first.")end
 end

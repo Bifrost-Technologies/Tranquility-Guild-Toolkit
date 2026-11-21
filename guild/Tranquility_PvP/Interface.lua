@@ -77,7 +77,7 @@ function D:Show()
   local settings=self.pages.Settings
   checkbox(settings,'enabled','Enable scouting and world-map overlay',0);checkbox(settings,'share','Share sightings with admitted guild scouts',48);checkbox(settings,'fallback','Allow scout-centered fallback only when exact coordinates are unavailable',96);checkbox(settings,'friendly','Observe and show friendlies as well as enemies',144)
   U.Label(settings,'Exact-only mode: turn the fallback option off.\n\nScouting and sharing start off. Only permitted nameplate, target and mouseover data is sampled. Private/secret values and forbidden frames are skipped. The module cannot query all nearby/layer players, track hidden units globally, or draw enemy skeletons through geometry.\n\nRaw observations stay in memory and expire quickly. Disabling this PvP sub-addon also removes the collector and alerts; the rest of the guild toolkit remains separate.',0,-218,870,240)
-  U.Label(f,'/tranq pvp · Enable Tranquility: PvP in AddOns · Requires native guild rank and vault admission',24,-716,890,28)
+  U.Label(f,'/tranq pvp · Enable Tranquility: PvP in AddOns · Requires Tranquility guild membership',24,-716,890,28)
  end
  self.frame:Show();self:Page(self.page or 'Radar')
 end

@@ -1,0 +1,24 @@
+{
+  "name": "Tranquility-Guild-Toolkit",
+  "primary": "guild/Tranquility",
+  "addons": [
+    "guild/Tranquility",
+    "guild/Tranquility_Auctions",
+    "guild/Tranquility_DB",
+    "guild/Tranquility_Dungeon",
+    "guild/Tranquility_Gear",
+    "guild/Tranquility_Info",
+    "guild/Tranquility_LFP",
+    "guild/Tranquility_Loot",
+    "guild/Tranquility_Phases",
+    "guild/Tranquility_PvP",
+    "guild/Tranquility_Recruitment",
+    "guild/Tranquility_Regions",
+    "guild/Tranquility_Summons",
+    "Uber",
+    "FlightPathFinder",
+    "LookingForProfession",
+    "TranquilityLFG",
+    "WorldNavigation"
+  ]
+}

@@ -71,4 +71,17 @@ TranquilityLFG 0.2.0-beta.1 adds separate Dungeon/Battleground/Arena pages, casu
 
 ## Dedicated membership and guild work
 
-Tranquility Toolkit now requires native Dedicated Member-or-higher membership. Member recruits verify through the separately configured Discord bot and an authorized officer confirms their native promotion. The tradesman board supports profession bank orders, player help offers, multi-participant mercenary contracts, reviewed payroll and withdrawal flags. Open `/tranq jobs`. Payments, bank privileges and punitive guild actions remain native/manual. See [Membership and jobs](../../curseforge/MEMBERSHIP-AND-JOBS.md) in the submission documentation for policy, workflow and evidence limits.
+Tranquility Toolkit admits all native Tranquility guild members, including Members and Recruits. No vault, code, Discord verification or minimum rank is required for entry. Nonmembers see a join-guild message and https://discord.gg/CMjbSRYt6. Officer, job and payout permissions remain separate. The tradesman board supports profession bank orders, player help offers, multi-participant mercenary contracts, reviewed payroll and withdrawal flags. Open `/tranq jobs`. Payments, bank privileges and punitive guild actions remain native/manual. See [Membership and jobs](../../curseforge/MEMBERSHIP-AND-JOBS.md) in the submission documentation for policy, workflow and evidence limits.
+
+## Main-menu automatic features
+
+Open `/tranq` (or `/tq`). The right-hand **Automatic features** panel contains 20 saved switches; scroll to see the full list. Hover a switch for its requirements. Missing optional addons are labeled and disabled instead of appearing active.
+
+- Enhanced enemy nameplates: master switch, players, NPCs, outlines, names/type labels, skull icons, target and focus emphasis.
+- WoW enemy nameplate visibility (normally V), changed only out of combat. The live status explains when hidden game nameplates prevent enhancements from appearing.
+- PvP scouting/heatmaps, guild sharing, friendly sightings, approximate scout-location fallback, approaching-enemy warnings and sound. These use Tranquility PvP's existing settings and defaults; scouting/sharing remain opt-in.
+- Passive loot journaling. Turning it off preserves history and stops new observations; it does not toggle the game's Auto Loot feature.
+- Flight Path Finder's map markers, neutral hubs and labels, when that addon is loaded.
+- The Tranquility minimap launcher. `/tranq` still opens the toolkit when the button is hidden.
+
+Effects apply immediately and settings persist through reload. Enhancements only mark enemy nameplates actually exposed by the client. They do not reveal hidden units, extend render distance or provide a complete enemy census. Guild access is checked before showing effects. No combat farming, automated invitations, or setup-dependent workflow is added to these switches.

@@ -1,7 +1,8 @@
 if _G.TranquilityAccess then return end
 local A={required="dedicated member",roster={},threshold=nil}
 _G.TranquilityAccess=A
-A.denial="you are not a dedicated member of Tranquility. Please join our guild & discord to access Tranquility Guild Toolkit! Ty"
+A.denial="You are not a member of Tranquility. Please join our guild to access Tranquility Guild Toolkit. Join our Discord below to get started."
+A.discord="https://discord.gg/CMjbSRYt6"
 function A:Public(v)if issecretvalue and issecretvalue(v)then return nil end;return v end
 function A:Read(fn,...)if type(fn)~="function"then return nil end;local ok,v=pcall(fn,...);return ok and self:Public(v)or nil end
 function A:Key(n)if type(n)~="string"then return ""end;if not n:find("-",1,true)then n=n.."-"..(GetNormalizedRealmName and GetNormalizedRealmName()or GetRealmName and GetRealmName()or "")end;return n:lower()end
@@ -38,9 +39,8 @@ function A:RankAllowed()
  return self.threshold~=nil and index<self.threshold
 end
 function A:Allowed()
- if not self:RankAllowed()then return false end
- local d=_G.TranquilityDB;local v=d and d.security and d.security.vaultUnlocked
- return type(self:Read(UnitGUID,"player"))=="string"and type(v)=="table"and v.character==self:Key(self:Read(GetUnitName,"player",true))and v.guid==self:Read(UnitGUID,"player")and v.confirmed==true
+ local guild=self:Read(GetGuildInfo,"player")
+ return type(guild)=="string"and guild:lower()=="tranquility"
 end
 function A:Member(who)
  if self:Key(who)==self:Key(self:Read(GetUnitName,"player",true))then local rank,index=self:Native();if rank then return {name=who,rank=rank,index=index,guid=self:Read(UnitGUID,"player")}end end
@@ -57,6 +57,7 @@ function A:HideTools()
  local T=_G.Tranquility
  if T then
   if T.defense then T.defense:Stop()end
+  if T.enemyMarkers then T.enemyMarkers:Hide()end
   if T.frame then T.frame:Hide()end;if T.launcher then T.launcher:Hide()end
   for _,record in pairs(T.modules or {})do local object=record.object;if object.frame then object.frame:Hide()end;if object.Stop then pcall(object.Stop,object)end end
   for _,f in ipairs(UISpecialFrames or {})do if type(f)=="string"and f:match("^Tranquility")and f~="TranquilityAccessRequired"and _G[f]and _G[f].Hide then pcall(_G[f].Hide,_G[f])end end
@@ -68,13 +69,18 @@ function A:HideTools()
  end
 end
 function A:ShowDenied()
- if self.ShowVault then return self:ShowVault()end
  self:HideTools()
+ local d=_G.TranquilityDB;if d and d.security then d.security.accessClosed=false end
  if not self.frame then
   local f=CreateFrame("Frame","TranquilityAccessRequired",UIParent,"BackdropTemplate");self.frame=f
-  f:SetSize(620,200);f:SetPoint("CENTER");f:SetFrameStrata("DIALOG");f:SetClampedToScreen(true);f:EnableMouse(true)
+  f:SetSize(620,270);f:SetPoint("CENTER");f:SetFrameStrata("DIALOG");f:SetClampedToScreen(true);f:EnableMouse(true)
   f:SetBackdrop({bgFile="Interface\\Buttons\\WHITE8X8",edgeFile="Interface\\Tooltips\\UI-Tooltip-Border",edgeSize=16});f:SetBackdropColor(.035,.045,.065,1)
   local text=f:CreateFontString(nil,"OVERLAY","GameFontNormalLarge");text:SetPoint("TOPLEFT",26,-36);text:SetSize(565,115);text:SetText(self.denial)
+  local link=CreateFrame("EditBox",nil,f,"InputBoxTemplate");self.discordBox=link;link:SetSize(550,30);link:SetPoint("TOPLEFT",35,-170);link:SetAutoFocus(false);link:SetText(self.discord)
+  link:SetScript("OnEditFocusGained",function(box)box:SetText(self.discord);box:HighlightText()end)
+  link:SetScript("OnEscapePressed",function(box)box:ClearFocus();f:Hide()end)
+  local hint=f:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall");hint:SetPoint("TOPLEFT",30,-215);hint:SetSize(560,26);hint:SetText("Copy this invite into your browser or Discord. No code or rank is required for addon access.")
+  f:SetScript("OnHide",function()link:ClearFocus();local db=_G.TranquilityDB;if db then db.security=db.security or {};db.security.accessClosed=true end end)
   local close=CreateFrame("Button",nil,f,"UIPanelCloseButton");close:SetPoint("TOPRIGHT",-5,-5);close:SetScript("OnClick",function()f:Hide()end)
   table.insert(UISpecialFrames,"TranquilityAccessRequired")
  end
@@ -82,8 +88,8 @@ function A:ShowDenied()
 end
 function A:Require()if self:Allowed()then return true end;return self:ShowDenied()end
 function A:Refresh()
- self:RefreshRoster();if not self:RankAllowed()then local d=_G.TranquilityDB;if d and d.security then d.security.vaultUnlocked=nil end end;local allowed=self:Allowed()
- if not allowed then self:HideTools();if self.wasAllowed~=false and not(_G.TranquilityDB and TranquilityDB.security and TranquilityDB.security.vaultClosed)then self:ShowDenied()end
+ self:RefreshRoster();local allowed=self:Allowed()
+ if not allowed then self:HideTools();if self.wasAllowed~=false and not(_G.TranquilityDB and TranquilityDB.security and TranquilityDB.security.accessClosed)then self:ShowDenied()end
  else
   if self.frame then self.frame:Hide()end
   local T=_G.Tranquility;if T then for id in pairs(T.modules or {})do T:Initialize(id)end;if T.EnsureLauncher then T:EnsureLauncher()end end
