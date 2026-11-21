@@ -1,3 +1,5 @@
+> Distribution update: Uber Summons, Flight Path Finder, World Navigation and Looking For Profession are separate downloads. Their guild dashboard pages provide copyable CurseForge project links and do not load/embed those addons. Guild LFG stays bundled for now; Enhanced LFG is planned separately. Ordinary dashboard navigation and closing remain available during combat; protected controls open separately.
+
 # Tranquility Guild Toolkit
 
 A modular guild toolkit specifically for Tranquility for World of Warcraft: Forever: private group finding, manual recruitment preparation, loot notes, auction research, dungeon information and a party summons checklist.

@@ -81,25 +81,12 @@ try {
         if ([IO.File]::ReadAllText($entry.Value) -match $sharingDeny) { throw "Public sharing audit failed: $($entry.Key)" }
         if ($entry.Key -notmatch '^Tranquility(?:_[A-Za-z]+)?/(?:[A-Za-z0-9_]+\.(?:lua|toc|md)|LICENSE)$') { throw 'Unsafe archive path' }
     }
-    # Uber is a standalone dependency-free addon shared by both editions.
-    foreach ($extra in @('Uber.toc','Uber_Camelot.toc','Uber.lua','Orders.lua','Drivers.lua','Presence.lua','Billing.lua','Administration.lua','Reservations.lua','Delivery.lua','Interface.lua','Roster.lua','ServiceUI.lua','AdminUI.lua','NetworkStats.lua','README.md','ADMIN-AND-DELIVERY.md','LICENSE','CHANGELOG.md')) {
-        $uberPath=Join-Path $repo ('Uber/' + $extra)
-        $uberContent=[IO.File]::ReadAllText($uberPath)
-        if($extra -match '\.lua$' -and $uberContent -match $deny){throw "Uber public automation audit failed: $extra"}
-        if($uberContent -match $sharingDeny){throw "Uber public sharing audit failed: $extra"}
-        $files[('Uber/' + $extra)] = $uberPath
-    }
     foreach($extra in @('TranquilityLFG.toc','TranquilityLFG_Camelot.toc','Access.lua','Vault.lua','LFG.lua','Profiles.lua','Builder.lua','Mirror.lua','Interface.lua','README.md','LICENSE')){
         $lfgPath=Join-Path $repo ('TranquilityLFG/'+$extra)
         $content=[IO.File]::ReadAllText($lfgPath)
         if($extra -match '\.lua$' -and $content -match $deny){throw "LFG public automation audit failed: $extra"}
         if($content -match $sharingDeny){throw "LFG public sharing audit failed: $extra"}
         $files[('TranquilityLFG/'+$extra)]=$lfgPath
-    }
-    foreach($extra in @('FlightPathFinder.toc','FlightPathFinder_Camelot.toc','FlightPathFinder.lua','Map.lua','Interface.lua','README.md','LICENSE','CHANGELOG.md')){
-        $path=Join-Path $repo ('FlightPathFinder/'+$extra);$content=[IO.File]::ReadAllText($path)
-        if(($extra -match '\.lua$' -and $content -match $deny) -or $content -match $sharingDeny){throw 'Flight Path Finder public audit failed'}
-        $files[('FlightPathFinder/'+$extra)]=$path
     }
     New-Item -ItemType Directory -Path $dist -Force | Out-Null
     Add-Type -AssemblyName System.IO.Compression
@@ -144,7 +131,7 @@ try {
         [string]$vault[-1],
         [string]$defense[-1],
         [string]$flights[-1],
-        "PASS: $($names.Count + 3) addon folders ($($names.Count) toolkit + TranquilityLFG + Uber + FlightPathFinder), $($files.Count) whitelisted files; manifest and archive hashes verified.",
+        "PASS: $($names.Count + 1) addon folders ($($names.Count) toolkit + TranquilityLFG), $($files.Count) whitelisted files; manifest and archive hashes verified.",
         'PASS: declared addon files only; no test fixtures, credentials or personal SavedVariables.',
         'PASS: MIT license included in every addon folder.',
         "SHA256: $hash",

@@ -40,7 +40,6 @@ function D:Add(id,label,description,open)
  self.buttons[id]=b;self.list:SetHeight(#self.order*33)
 end
 function D:Select(id)
- if InCombatLockdown and InCombatLockdown()then O:Notify('Switch dashboard pages after combat.');return false end
  local page=self.pages[id];if not page then return false end
  if self.active==id and self.current then self.frame:Show();return true end
  local previous=self.current
@@ -53,6 +52,15 @@ function D:Select(id)
  if not ok then reason='Could not open this page: '..tostring(panel);panel=nil end
  if not panel then self.body:SetHeight(560);self.message:SetText(reason or 'Enable the required addon in the character-selection AddOns menu, then reload.');self.message:Show();return false end
  if panel==self.frame then return false end
+ local function protected(frame)
+  if frame.IsProtected and frame:IsProtected()then return true end
+  if frame.GetChildren then for _,child in ipairs({frame:GetChildren()})do if protected(child)then return true end end end
+  return false
+ end
+ if protected(panel)then
+  self.body:SetHeight(560);self.message:SetText('This page uses protected WoW controls and opens in its own window. The dashboard can always be closed.');self.message:Show()
+  return true
+ end
  local w,h=panel:GetWidth(),panel:GetHeight();local width=self.viewport:GetWidth();if width<1 then width=924 end
  local scale=math.min(1,(width-8)/math.max(1,w));panel:SetParent(self.body);panel:ClearAllPoints();panel:SetScale(scale);panel:SetPoint('TOPLEFT',self.body,'TOPLEFT',0,0);panel:SetClampedToScreen(false);panel:SetMovable(false);panel:RegisterForDrag();panel:SetScript('OnDragStart',nil);panel:SetScript('OnDragStop',nil);panel:SetFrameStrata('DIALOG');panel:SetFrameLevel(self.body:GetFrameLevel()+2)
  self.body:SetWidth(width);self.body:SetHeight(math.max(self.viewport:GetHeight(),h*scale+8));self.current=panel;skin(panel,0);panel:Show();return true

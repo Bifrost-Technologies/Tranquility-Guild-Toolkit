@@ -62,9 +62,9 @@ function T:Initialize(id)
 end
 function T:OpenModule(id)
     if not TranquilityAccess or not TranquilityAccess:Require()then return end
+    if id=="Summons" and InCombatLockdown and InCombatLockdown() then self:Notify("Summon controls can be opened after combat. The dashboard can still be closed or switched."); return end
     local record = self.modules[id]
     if not record or not record.ready then self:Notify("Enable Tranquility " .. id .. " in the character-selection AddOns menu, then reload."); return end
-    if InCombatLockdown and InCombatLockdown() then self:Notify("Open panels after combat."); return end
     local object = record.object
     local ok, err = pcall(function()
         if object.Show then object:Show()
@@ -114,7 +114,7 @@ function T:Show()
     end
     self.footer:SetText("/tranq or /tq opens this menu. Version " .. self.version ..
         "\nUse Help and settings for instructions and local data controls.")
-    if self.BuildQuickControls then self:BuildQuickControls();self:RefreshQuickControls()end
+    if self.BuildQuickControls and self.quickPanel then self:BuildQuickControls();self:RefreshQuickControls()end
     self.frame:Show()
 end
 function T:EnsureLauncher()

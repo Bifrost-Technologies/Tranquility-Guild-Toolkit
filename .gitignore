@@ -98,3 +98,10 @@ __pycache__/
 !/docs/FEATURE-AUDIT-2026-11-20.json
 
 !/docs/FEATURE-AUDIT-2026-11-20.json
+
+# Standalone distributions have their own public repositories.
+/Uber/
+/FlightPathFinder/
+/LookingForProfession/
+/WorldNavigation/
+/guild/Tranquility_LFP/

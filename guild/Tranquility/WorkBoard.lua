@@ -7,10 +7,10 @@ local function me()return GetUnitName("player",true)end
 local function clean(s,n)return type(s)=="string"and #s>0 and #s<=n and not s:find("[%c|]")end
 local function int(v,low,high)local n=tonumber(v);return n and n==n and n%1==0 and n>=low and n<=high and n end
 function W:DB()
- TranquilityDB=type(TranquilityDB)=="table"and TranquilityDB or {};TranquilityDB.work=TranquilityDB.work or {jobs={},audit={},bank={},evidence={},paid={},pending={},verification={}}
- local d=TranquilityDB.work;TranquilityDB.security=TranquilityDB.security or {adminRanks={},bans={},payoutRanks={}}
- for _,k in ipairs({"jobs","audit","bank","evidence","paid","pending","verification"})do d[k]=d[k]or {}end
- local s=TranquilityDB.security;s.adminRanks=s.adminRanks or {};s.bans=s.bans or {};s.payoutRanks=s.payoutRanks or {}
+ TranquilityDB=type(TranquilityDB)=="table"and TranquilityDB or {};TranquilityDB.work=type(TranquilityDB.work)=='table'and TranquilityDB.work or {jobs={},audit={},bank={},evidence={},paid={},pending={},verification={}}
+ local d=TranquilityDB.work;TranquilityDB.security=type(TranquilityDB.security)=='table'and TranquilityDB.security or {adminRanks={},bans={},payoutRanks={}}
+ for _,k in ipairs({"jobs","audit","bank","evidence","paid","pending","verification"})do if type(d[k])~='table'then d[k]={}end end
+ local s=TranquilityDB.security;for _,k in ipairs({'adminRanks','bans','payoutRanks'})do if type(s[k])~='table'then s[k]={}end end
  return d,s
 end
 function W:Log(kind,who,detail)
@@ -49,13 +49,15 @@ function W:Claim(id)
  if not A:Require()then return false end
  local d=self:DB();local j=d.jobs[id]
  if not j or j.status~="OPEN"or j.deadline<now()then return false end
- d.pending[id]={at=now(),status="Claim requested; awaiting posting officer"};self:Send({"C1",id});self:Notice("Claim requested. Wait for assignment before producing/depositing goods.");return true
+ if not self:Send({"C1",id})then self:Notice("Network queue full; claim was not sent. Retry shortly.");return false end
+ d.pending[id]={at=now(),status="Claim requested; awaiting posting officer"};self:Notice("Claim requested. Wait for assignment before producing/depositing goods.");return true
 end
 function W:Submit(id)
  if not A:Require()then return false end
  local d=self:DB();local j=d.jobs[id]
  if not j or A:Key(j.assignee)~=A:Key(me())or (j.status~="CLAIMED"and j.status~="FLAGGED")then return false end
- self:Send({"D1",id});self:Notice("Delivery reported, not proven. The posting officer reviews matching bank evidence or service completion.");return true
+ if not self:Send({"D1",id})then self:Notice("Network queue full; delivery report was not sent. Retry shortly.");return false end
+ self:Notice("Delivery reported, not proven. The posting officer reviews matching bank evidence or service completion.");return true
 end
 function W:Owned(j)return j and A:Admin()and A:Key(j.owner)==A:Key(me())end
 function W:Review(id,approve)
