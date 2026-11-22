@@ -2,7 +2,7 @@
 ## Title: Tranquility: PvP
 ## Notes: Guild scouting, short-lived PvP heatmaps and approaching-danger alerts. /tranq pvp.
 ## Author: Tranquility Guild
-## Version: 1.0.0-beta.15
+## Version: 1.0.0
 ## X-License: MIT
 ## Dependencies: Tranquility
 

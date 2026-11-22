@@ -2,7 +2,7 @@
 ## Title: Tranquility: Summons
 ## Notes: Zone-aware party summons. Each ritual requires a physical click.
 ## Author: Tranquility Guild
-## Version: 1.0.0-beta.15
+## Version: 1.0.0
 ## X-License: MIT
 ## Dependencies: Tranquility
 
